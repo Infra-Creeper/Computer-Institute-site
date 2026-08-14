@@ -1,0 +1,80 @@
+<!--
+  Component: breadcrumb.html
+  Purpose: SEO-friendly breadcrumb navigation with schema.org BreadcrumbList
+           structured data. Provides clear navigation hierarchy and improves
+           search engine crawlability.
+
+  Context Variables:
+    - breadcrumbs (list of dicts) — Each item: { label (str), url_name (str), url_kwargs (dict, optional) }
+      If url_name is empty string, the item is the current page (no link).
+
+  HTMX Hooks: None — purely structural/SEO component.
+
+  SEO Notes:
+    - Renders schema.org JSON-LD for BreadcrumbList.
+    - Uses <nav aria-label="Breadcrumb"> semantic wrapper.
+    - Current page uses aria-current="page".
+
+  Dependencies:
+    - Tailwind CSS (utility classes)
+-->
+
+{% if breadcrumbs %}
+<nav aria-label="Breadcrumb" class="bg-almond-cream-50 dark:bg-jet-black-900 py-3 border-b border-steel-blue-200 dark:border-jet-black-700">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <ol
+      class="flex items-center space-x-2 text-sm"
+      itemscope
+      itemtype="https://schema.org/BreadcrumbList"
+    >
+      {% for crumb in breadcrumbs %}
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" class="flex items-center">
+          {% if not forloop.first %}
+            <svg class="flex-shrink-0 h-4 w-4 text-steel-blue-400 dark:text-jet-black-500 mx-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          {% endif %}
+
+          {% if crumb.url_name %}
+            <a
+              href="{% url crumb.url_name %}{% if crumb.url_kwargs %}{% for k, v in crumb.url_kwargs.items %}/{% if k != 'id' %}{{ k }}/{{ v }}{% else %}{{ v }}{% endif %}{% endfor %}{% endif %}"
+              itemprop="item"
+              class="text-steel-blue-600 dark:text-steel-blue-400 hover:text-steel-blue-700 dark:hover:text-steel-blue-300 hover:underline transition-colors"
+            >
+              <span itemprop="name">{{ crumb.label }}</span>
+            </a>
+            <meta itemprop="position" content="{{ forloop.counter }}" />
+          {% else %}
+            <span
+              itemprop="item"
+              aria-current="page"
+              class="text-jet-black-900 dark:text-almond-cream-100 font-medium"
+            >
+              <span itemprop="name">{{ crumb.label }}</span>
+            </span>
+            <meta itemprop="position" content="{{ forloop.counter }}" />
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ol>
+  </div>
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {% for crumb in breadcrumbs %}
+      {
+        "@type": "ListItem",
+        "position": {{ forloop.counter }},
+        "name": "{{ crumb.label }}",
+        "item": "{{ request.build_absolute_uri|escapejs }}{% if crumb.url_name %}{% url crumb.url_name %}{% endif %}"
+      }{% if not forloop.last %},{% endif %}
+      {% endfor %}
+    ]
+  }
+  </script>
+</nav>
+{% endif %}

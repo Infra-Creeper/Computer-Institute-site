@@ -1,0 +1,83 @@
+<!--
+  Component: pricing-card.html
+  Purpose: Individual pricing tier card displaying plan name, price,
+           feature list, and CTA button. Highlights recommended plan.
+
+  Context Variables:
+    - plan.name (str) — Required. Plan name (e.g., "Basic", "Pro", "Enterprise").
+    - plan.price (float|int) — Required. Monthly or one-time price.
+    - plan.currency (str) — Currency code (default: "USD").
+    - plan.period (str) — Billing period (e.g., "month", "year").
+    - plan.features (list of str) — Feature list items.
+    - plan.is_recommended (bool) — Whether this is the recommended/featured plan.
+    - plan.url_name (str, optional) — Django URL name for enrollment/action.
+    - plan.cta_label (str, optional) — CTA button text (default: "Get Started").
+
+  HTMX Hooks:
+    - hx-post for plan selection/enrollment if applicable.
+
+  SEO Notes:
+    - Uses <article> with proper heading hierarchy.
+    - Schema.org Offer microdata for pricing.
+
+  Dependencies:
+    - Tailwind CSS
+-->
+
+<article
+  class="relative bg-white dark:bg-jet-black-800 rounded-xl border {% if plan.is_recommended %}border-sandy-brown-400 dark:border-sandy-brown-500 shadow-lg ring-2 ring-sandy-brown-400{% else %}border-steel-blue-200 dark:border-jet-black-700 shadow-sm{% endif %} p-6 lg:p-8 flex flex-col"
+  itemscope
+  itemtype="https://schema.org/Offer"
+  aria-label="Pricing plan: {{ plan.name }}"
+>
+  <!-- Recommended Badge -->
+  {% if plan.is_recommended %}
+    <div class="absolute -top-3 left-1/2 -translate-x-1/2">
+      <span class="px-4 py-1 text-xs font-bold text-white bg-sandy-brown-500 rounded-full uppercase tracking-wider">
+        Most Popular
+      </span>
+    </div>
+  {% endif %}
+
+  <!-- Plan Name -->
+  <h3 class="text-lg font-bold text-jet-black-900 dark:text-almond-cream-50 mb-2">
+    {{ plan.name }}
+  </h3>
+
+  <!-- Price -->
+  <div class="mb-6" itemprop="priceSpecification" itemscope itemtype="https://schema.org/PriceSpecification">
+    <div class="flex items-baseline gap-1">
+      <span class="text-sm text-jet-black-500 dark:text-almond-cream-400">
+        {% if plan.currency == 'INR' %}₹{% elif plan.currency == 'EUR' %}€{% elif plan.currency == 'GBP' %}£{% else %}${% endif %}
+      </span>
+      <span class="text-4xl font-bold text-jet-black-900 dark:text-almond-cream-50" itemprop="price" content="{{ plan.price }}">
+        {{ plan.price|floatformat:0 }}
+      </span>
+    </div>
+    <p class="text-sm text-jet-black-500 dark:text-almond-cream-400">
+      per {{ plan.period|default:"month" }}
+      <meta itemprop="priceCurrency" content="{{ plan.currency|default:'USD' }}" />
+    </p>
+  </div>
+
+  <!-- Features -->
+  <ul class="space-y-3 mb-8 flex-grow" role="list">
+    {% for feature in plan.features %}
+      <li class="flex items-start gap-2 text-sm text-jet-black-700 dark:text-almond-cream-200">
+        <svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+        </svg>
+        <span>{{ feature }}</span>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <!-- CTA Button -->
+  <a
+    href="{% url plan.url_name|default:'auth:register' %}"
+    class="block w-full text-center px-6 py-3 text-base font-semibold rounded-lg transition-all shadow-md {% if plan.is_recommended %}text-white bg-sandy-brown-500 hover:bg-sandy-brown-400 focus:ring-sandy-brown-500{% else %}text-steel-blue-600 dark:text-steel-blue-400 border-2 border-steel-blue-300 dark:border-steel-blue-600 hover:bg-steel-blue-50 dark:hover:bg-jet-black-700 focus:ring-steel-blue-500{% endif %} focus:outline-none focus:ring-2 focus:ring-offset-2"
+    aria-label="Select {{ plan.name }} plan"
+  >
+    {{ plan.cta_label|default:"Get Started" }}
+  </a>
+</article>

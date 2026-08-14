@@ -1,0 +1,142 @@
+<!--
+  Component: filter-sidebar.html
+  Purpose: Collapsible filter panel with checkboxes and radio buttons for
+           course filtering. Mobile-responsive with accordion-style sections.
+           HTMX-enabled for live filter updates.
+
+  Context Variables:
+    - filter_groups (list of dicts) — Each: { name (str), type ('checkbox'|'radio'), options (list of dicts) }
+      Each option: { label (str), value (str), count (int), checked (bool) }
+    - target_id (str, optional) — HTMX target element ID (default: "course-grid-container")
+    - endpoint_url_name (str, optional) — Django URL name for filter endpoint (default: "courses:filter")
+
+  HTMX Hooks:
+    - All inputs trigger filter update:
+      hx-get="{% url 'courses:filter' %}"
+      hx-trigger="change"
+      hx-target="#{{ target_id }}"
+      hx-swap="outerHTML"
+    - Mobile collapse toggle via hx-trigger="click"
+
+  SEO Notes:
+    - Uses <aside> semantic element.
+    - Proper form labels for all inputs.
+    - aria-expanded on collapsible sections.
+
+  Dependencies:
+    - Tailwind CSS
+-->
+
+<aside
+  id="filter-sidebar"
+  class="bg-white dark:bg-jet-black-800 rounded-xl border border-steel-blue-200 dark:border-jet-black-700 shadow-sm lg:sticky lg:top-24"
+  aria-label="Filter panel"
+>
+  <!-- Header -->
+  <div class="flex items-center justify-between p-5 border-b border-steel-blue-200 dark:border-jet-black-700">
+    <h2 class="text-lg font-bold text-jet-black-900 dark:text-almond-cream-50">
+      Filters
+    </h2>
+    <button
+      type="button"
+      class="lg:hidden p-2 text-jet-black-600 dark:text-almond-cream-200 hover:text-steel-blue-600"
+      aria-label="Close filter panel"
+      hx-get="{% url endpoint_url_name|default:'courses:filter' %}{% if request.GET.urlencode %}?{{ request.GET.urlencode }}{% endif %}"
+      hx-target="#{{ target_id|default:'course-grid-container' }}"
+      hx-swap="outerHTML"
+      onclick="document.getElementById('filter-sidebar-content').classList.add('hidden')"
+    >
+      <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Filter Content -->
+  <div id="filter-sidebar-content" class="p-5 space-y-6">
+    {% for group in filter_groups %}
+      <div>
+        <!-- Collapsible Header -->
+        <button
+          type="button"
+          class="flex items-center justify-between w-full text-left"
+          aria-expanded="true"
+          aria-controls="filter-group-{{ forloop.counter0 }}"
+          onclick="
+            const content = document.getElementById('filter-group-{{ forloop.counter0 }}');
+            const expanded = content.classList.toggle('hidden');
+            this.setAttribute('aria-expanded', !expanded);
+          "
+        >
+          <span class="text-sm font-semibold text-jet-black-800 dark:text-almond-cream-100">
+            {{ group.name }}
+          </span>
+          <svg class="h-4 w-4 text-jet-black-500 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+
+        <!-- Filter Options -->
+        <fieldset
+          id="filter-group-{{ forloop.counter0 }}"
+          class="mt-3 space-y-2"
+        >
+          {% for option in group.options %}
+            {% if group.type == 'checkbox' %}
+              <label class="flex items-center gap-2 text-sm text-jet-black-700 dark:text-almond-cream-200 cursor-pointer hover:text-steel-blue-600 transition-colors">
+                <input
+                  type="checkbox"
+                  name="filter_{{ group.name|slugify }}"
+                  value="{{ option.value }}"
+                  class="h-4 w-4 rounded text-steel-blue-600 border-steel-blue-300 focus:ring-steel-blue-500"
+                  {% if option.checked %}checked{% endif %}
+                  hx-get="{% url endpoint_url_name|default:'courses:filter' %}"
+                  hx-trigger="change"
+                  hx-target="#{{ target_id|default:'course-grid-container' }}"
+                  hx-swap="outerHTML"
+                  hx-include="this.closest('aside') input"
+                />
+                <span>{{ option.label }}</span>
+                {% if option.count %}
+                  <span class="ml-auto text-xs text-jet-black-400 dark:text-jet-black-500">({{ option.count }})</span>
+                {% endif %}
+              </label>
+            {% elif group.type == 'radio' %}
+              <label class="flex items-center gap-2 text-sm text-jet-black-700 dark:text-almond-cream-200 cursor-pointer hover:text-steel-blue-600 transition-colors">
+                <input
+                  type="radio"
+                  name="filter_{{ group.name|slugify }}"
+                  value="{{ option.value }}"
+                  class="h-4 w-4 text-steel-blue-600 border-steel-blue-300 focus:ring-steel-blue-500"
+                  {% if option.checked %}checked{% endif %}
+                  hx-get="{% url endpoint_url_name|default:'courses:filter' %}"
+                  hx-trigger="change"
+                  hx-target="#{{ target_id|default:'course-grid-container' }}"
+                  hx-swap="outerHTML"
+                  hx-include="this.closest('aside') input"
+                />
+                <span>{{ option.label }}</span>
+                {% if option.count %}
+                  <span class="ml-auto text-xs text-jet-black-400 dark:text-jet-black-500">({{ option.count }})</span>
+                {% endif %}
+              </label>
+            {% endif %}
+          {% endfor %}
+        </fieldset>
+      </div>
+    {% endfor %}
+
+    <!-- Clear All -->
+    <div class="pt-4 border-t border-steel-blue-200 dark:border-jet-black-700">
+      <button
+        type="button"
+        class="w-full px-4 py-2.5 text-sm font-semibold text-white bg-steel-blue-600 hover:bg-steel-blue-500 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-steel-blue-500"
+        hx-get="{% url 'courses:list' %}"
+        hx-target="#{{ target_id|default:'course-grid-container' }}"
+        hx-swap="outerHTML"
+      >
+        Clear All Filters
+      </button>
+    </div>
+  </div>
+</aside>

@@ -1,0 +1,61 @@
+<!--
+  Component: cta-section.html
+  Purpose: Full-width call-to-action banner with headline, description,
+           and action buttons. High-contrast background for visual impact.
+
+  Context Variables:
+    - cta.headline (str) — Required. Main CTA heading.
+    - cta.description (str) — Supporting description text.
+    - cta.primary_label (str) — Primary button text.
+    - cta.primary_url_name (str) — Django URL name for primary button.
+    - cta.secondary_label (str, optional) — Secondary button text.
+    - cta.secondary_url_name (str, optional) — Django URL name for secondary button.
+    - cta.background (str, optional) — 'light' or 'dark' (default: 'dark')
+
+  HTMX Hooks: None — static CTA banner.
+
+  SEO Notes:
+    - Uses <section> with aria-label.
+    - Buttons use descriptive aria-labels.
+
+  Dependencies:
+    - Tailwind CSS
+-->
+
+<section
+  class="py-12 lg:py-16 {% if cta.background == 'light' %}bg-almond-cream-50 dark:bg-jet-black-800{% else %}bg-gradient-to-r from-steel-blue-700 via-steel-blue-800 to-deep-space-blue-800{% endif %}"
+  aria-label="Call to action"
+>
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h2 class="text-3xl sm:text-4xl font-bold {% if cta.background == 'light' %}text-jet-black-900 dark:text-almond-cream-50{% else %}text-white{% endif %} mb-4">
+      {{ cta.headline|default:"Ready to Start Your Learning Journey?" }}
+    </h2>
+
+    <p class="text-lg {% if cta.background == 'light' %}text-jet-black-700 dark:text-almond-cream-300{% else %}text-steel-blue-100{% endif %} mb-8 max-w-2xl mx-auto">
+      {{ cta.description|default:"Join thousands of students who have transformed their careers with our expert-led courses." }}
+    </p>
+
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+      <a
+        href="{% url cta.primary_url_name|default:'auth:register' %}"
+        class="inline-flex items-center justify-center px-8 py-4 text-base font-semibold rounded-lg text-white bg-sandy-brown-500 hover:bg-sandy-brown-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sandy-brown-500 transition-all shadow-lg hover:shadow-xl"
+        aria-label="{{ cta.primary_label|default:'Get Started' }}"
+      >
+        {{ cta.primary_label|default:"Get Started" }}
+        <svg class="ml-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        </svg>
+      </a>
+
+      {% if cta.secondary_label %}
+        <a
+          href="{% url cta.secondary_url_name %}"
+          class="inline-flex items-center justify-center px-8 py-4 text-base font-semibold rounded-lg {% if cta.background == 'light' %}text-steel-blue-600 dark:text-steel-blue-400 border-2 border-steel-blue-300 dark:border-steel-blue-600 hover:bg-steel-blue-50 dark:hover:bg-jet-black-700{% else %}text-white border-2 border-white/30 hover:border-white/60 hover:bg-white/10{% endif %} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white/50 transition-all"
+          aria-label="{{ cta.secondary_label }}"
+        >
+          {{ cta.secondary_label }}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,86 @@
+<!--
+  Component: search-bar.html
+  Purpose: Searchable course finder with autocomplete suggestions.
+           HTMX-powered live search with debounce delay.
+
+  Context Variables:
+    - placeholder (str, optional) — Input placeholder text (default: "Search courses...")
+    - search_url_name (str, optional) — Django URL name for search endpoint (default: "courses:search")
+
+  HTMX Hooks:
+    - Live search with debounce:
+      hx-get="{% url 'courses:search' %}"
+      hx-trigger="keyup changed delay:500ms"
+      hx-target="#search-results"
+      hx-swap="innerHTML"
+    - Autocomplete dropdown appears below the input.
+
+  SEO Notes:
+    - Uses role="search" landmark for accessibility.
+    - Autocomplete suggestions are navigable via keyboard.
+
+  Dependencies:
+    - Tailwind CSS
+    - loading-spinner.html (for search loading state)
+-->
+
+<div role="search" class="w-full max-w-2xl mx-auto">
+  <form
+    class="relative"
+    hx-get="{% url search_url_name|default:'courses:search' %}"
+    hx-trigger="keyup changed delay:500ms"
+    hx-target="#search-results"
+    hx-swap="innerHTML"
+    hx-indicator="#search-spinner"
+  >
+    <label for="course-search-input" class="sr-only">Search courses</label>
+    <div class="relative">
+      <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+        <svg class="h-5 w-5 text-jet-black-400 dark:text-jet-black-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+      </div>
+      <input
+        id="course-search-input"
+        type="search"
+        name="q"
+        placeholder="{{ placeholder|default:'Search courses...' }}"
+        class="block w-full pl-12 pr-12 py-4 text-base text-jet-black-900 dark:text-almond-cream-100 bg-white dark:bg-jet-black-800 border border-steel-blue-300 dark:border-jet-black-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-steel-blue-500 focus:border-transparent shadow-sm transition-shadow"
+        autocomplete="off"
+        role="combobox"
+        aria-expanded="false"
+        aria-controls="search-results"
+        aria-autocomplete="list"
+      />
+      <!-- Clear Button -->
+      <button
+        type="button"
+        class="absolute inset-y-0 right-0 pr-4 flex items-center text-jet-black-400 hover:text-jet-black-600 dark:text-jet-black-500 dark:hover:text-almond-cream-200"
+        aria-label="Clear search"
+        onclick="document.getElementById('course-search-input').value=''; document.getElementById('search-results').innerHTML='';"
+      >
+        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="search-spinner" class="htmx-indicator absolute inset-y-0 right-12 flex items-center pr-4">
+      <svg class="animate-spin h-5 w-5 text-steel-blue-500" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+      </svg>
+    </div>
+  </form>
+
+  <!-- Autocomplete Results Container -->
+  <div
+    id="search-results"
+    role="listbox"
+    aria-label="Search results"
+    class="absolute z-50 w-full max-w-2xl mt-2 bg-white dark:bg-jet-black-800 border border-steel-blue-200 dark:border-jet-black-700 rounded-xl shadow-lg max-h-80 overflow-y-auto hidden"
+  >
+    <!-- Results populated via HTMX response -->
+  </div>
+</div>

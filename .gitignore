@@ -1,0 +1,25 @@
+# Python/Django
+__pycache__/
+*.py[cod]
+db.sqlite3
+media/
+staticfiles/
+local_settings.py
+
+# Environments and IDEs
+.env
+.venv
+env/
+venv/
+.idea/
+.vscode/
+*.swp
+
+# Logs and databases
+*.log
+*.sqlite3-journal
+
+# Python packaging
+*.egg-info/
+dist/
+build/

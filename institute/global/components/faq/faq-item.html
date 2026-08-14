@@ -1,0 +1,97 @@
+<!--
+  Component: faq-item.html
+  Purpose: Expandable FAQ item with HTMX-triggered accordion behavior.
+           Loads answer content dynamically or toggles inline content.
+
+  Context Variables:
+    - faq.id (int) — Required. Unique FAQ item ID.
+    - faq.question (str) — Required. The question text.
+    - faq.answer (str) — The answer text (HTML allowed).
+    - faq.category (str, optional) — Category name for grouping.
+
+  HTMX Hooks:
+    - Inline toggle (if answer is pre-loaded):
+      hx-trigger="click"
+      hx-swap="none" (toggle handled by JS)
+    - Dynamic load (if answer is loaded on-demand):
+      hx-get="{% url 'faq:detail' faq.id %}"
+      hx-trigger="click"
+      hx-target="#faq-answer-{{ faq.id }}"
+      hx-swap="innerHTML"
+
+  SEO Notes:
+    - Uses schema.org Question/Answer microdata.
+    - Proper heading hierarchy with <h3>.
+
+  Dependencies:
+    - Tailwind CSS
+-->
+
+<div
+  class="border border-steel-blue-200 dark:border-jet-black-700 rounded-lg overflow-hidden"
+  itemscope
+  itemtype="https://schema.org/Question"
+>
+  <!-- Question (Clickable Header) -->
+  <button
+    type="button"
+    class="w-full flex items-center justify-between p-5 text-left bg-white dark:bg-jet-black-800 hover:bg-steel-blue-50 dark:hover:bg-jet-black-700 transition-colors focus:outline-none focus:ring-2 focus:ring-inset focus:ring-steel-blue-500"
+    aria-expanded="false"
+    aria-controls="faq-answer-{{ faq.id }}"
+    id="faq-question-{{ faq.id }}"
+    {% if faq.answer %}
+      onclick="
+        const answer = document.getElementById('faq-answer-{{ faq.id }}');
+        const expanded = answer.classList.toggle('hidden');
+        this.setAttribute('aria-expanded', !expanded);
+        this.querySelector('.faq-icon').classList.toggle('rotate-180');
+      "
+    {% else %}
+      hx-get="{% url 'faq:detail' faq.id %}"
+      hx-trigger="click"
+      hx-target="#faq-answer-{{ faq.id }}"
+      hx-swap="innerHTML"
+    {% endif %}
+  >
+    <h3
+      class="text-base font-semibold text-jet-black-900 dark:text-almond-cream-100 pr-4"
+      itemprop="name"
+    >
+      {{ faq.question }}
+    </h3>
+    <svg
+      class="faq-icon h-5 w-5 text-steel-blue-500 flex-shrink-0 transition-transform duration-200"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+    </svg>
+  </button>
+
+  <!-- Answer Content -->
+  <div
+    id="faq-answer-{{ faq.id }}"
+    class="hidden border-t border-steel-blue-100 dark:border-jet-black-700 bg-almond-cream-50 dark:bg-jet-black-900"
+    role="region"
+    aria-labelledby="faq-question-{{ faq.id }}"
+    itemscope
+    itemtype="https://schema.org/Answer"
+  >
+    <div class="p-5 text-jet-black-700 dark:text-almond-cream-200 leading-relaxed" itemprop="text">
+      {% if faq.answer %}
+        {{ faq.answer|safe }}
+      {% else %}
+        <!-- HTMX loading indicator -->
+        <div class="flex items-center gap-2 text-sm text-steel-blue-500">
+          <svg class="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          Loading answer...
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>

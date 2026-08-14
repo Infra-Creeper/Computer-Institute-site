@@ -1,0 +1,44 @@
+<!--
+  Component: badge.html
+  Purpose: Reusable badge for tags, categories, certifications, levels, etc.
+           Supports multiple color variants and sizes.
+
+  Context Variables:
+    - badge.label (str) — Required. Badge text.
+    - badge.variant (str, optional) — 'primary' (default), 'success', 'warning', 'info', 'neutral'
+    - badge.size (str, optional) — 'sm' (default), 'md', 'lg'
+
+  Variants:
+    - primary:  bg-steel-blue-100 text-steel-blue-800 dark:bg-steel-blue-900 dark:text-steel-blue-200
+    - success:  bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200
+    - warning:  bg-sandy-brown-100 text-sandy-brown-800 dark:bg-sandy-brown-900 dark:text-sandy-brown-200
+    - info:     bg-deep-space-blue-100 text-deep-space-blue-800 dark:bg-deep-space-blue-900 dark:text-deep-space-blue-200
+    - neutral:  bg-jet-black-100 text-jet-black-800 dark:bg-jet-black-700 dark:text-jet-black-200
+
+  Sizes:
+    - sm: px-2 py-0.5 text-xs
+    - md: px-2.5 py-1 text-xs
+    - lg: px-3 py-1.5 text-sm
+
+  HTMX Hooks: None — purely presentational.
+
+  Dependencies:
+    - Tailwind CSS
+-->
+
+<span
+  class="inline-flex items-center font-medium rounded-full
+         {% if badge.variant == 'success' %}bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200
+         {% elif badge.variant == 'warning' %}bg-sandy-brown-100 text-sandy-brown-800 dark:bg-sandy-brown-900 dark:text-sandy-brown-200
+         {% elif badge.variant == 'info' %}bg-deep-space-blue-100 text-deep-space-blue-800 dark:bg-deep-space-blue-900 dark:text-deep-space-blue-200
+         {% elif badge.variant == 'neutral' %}bg-jet-black-100 text-jet-black-800 dark:bg-jet-black-700 dark:text-jet-black-200
+         {% else %}bg-steel-blue-100 text-steel-blue-800 dark:bg-steel-blue-900 dark:text-steel-blue-200
+         {% endif %}
+         {% if badge.size == 'lg' %}px-3 py-1.5 text-sm
+         {% elif badge.size == 'md' %}px-2.5 py-1 text-xs
+         {% else %}px-2 py-0.5 text-xs
+         {% endif %}"
+  aria-label="{{ badge.label }}"
+>
+  {{ badge.label }}
+</span>

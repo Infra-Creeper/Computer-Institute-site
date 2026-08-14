@@ -1,0 +1,164 @@
+<!--
+  Component: testimonial-carousel.html
+  Purpose: Carousel/slider of testimonials with HTMX-controlled pagination.
+           Supports auto-rotation (optional) and manual navigation.
+
+  Context Variables:
+    - testimonials (list) — List of testimonial objects (same structure as testimonial-card.html)
+    - autoplay (bool, optional) — Whether to auto-rotate (default: false)
+    - interval_ms (int, optional) — Auto-rotate interval in ms (default: 5000)
+
+  HTMX Hooks:
+    - Paginated loading:
+      hx-get="{% url 'testimonials:page' page=2 %}"
+      hx-trigger="click"
+      hx-target="#testimonial-carousel-track"
+      hx-swap="innerHTML"
+    - Navigation buttons use hx-trigger="click"
+
+  SEO Notes:
+    - Uses <section> with aria-label.
+    - Individual cards use aria-roledescription="slide".
+    - Carousel controls have descriptive aria-labels.
+
+  Dependencies:
+    - Tailwind CSS
+    - testimonial-card.html (each slide renders via this component)
+-->
+
+<section
+  class="py-12 lg:py-16 bg-almond-cream-50 dark:bg-jet-black-900"
+  aria-label="Student testimonials"
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Section Header -->
+    <div class="text-center mb-10">
+      <h2 class="text-3xl sm:text-4xl font-bold text-jet-black-900 dark:text-almond-cream-50 mb-3">
+        What Our Students Say
+      </h2>
+      <p class="text-lg text-jet-black-700 dark:text-almond-cream-300 max-w-2xl mx-auto">
+        Hear from graduates who transformed their careers through our programs.
+      </p>
+    </div>
+
+    <!-- Carousel Container -->
+    <div
+      id="testimonial-carousel"
+      class="relative overflow-hidden"
+      role="region"
+      aria-roledescription="carousel"
+      aria-label="Testimonial carousel"
+    >
+      <!-- Track -->
+      <div
+        id="testimonial-carousel-track"
+        class="flex transition-transform duration-500 ease-in-out"
+        style="transform: translateX(0%)"
+      >
+        {% for testimonial in testimonials %}
+          <div
+            class="w-full sm:w-1/2 lg:w-1/3 flex-shrink-0 px-4"
+            role="group"
+            aria-roledescription="slide"
+            aria-label="Testimonial {{ forloop.counter }} of {{ testimonials|length }}"
+          >
+            {% include "components/testimonials/testimonial-card.html" %}
+          </div>
+        {% endfor %}
+      </div>
+
+      <!-- Navigation Buttons -->
+      <div class="flex items-center justify-center gap-3 mt-8">
+        <button
+          type="button"
+          id="carousel-prev"
+          class="p-2 rounded-full bg-white dark:bg-jet-black-800 border border-steel-blue-200 dark:border-jet-black-700 text-jet-black-600 dark:text-almond-cream-200 hover:bg-steel-blue-50 dark:hover:bg-jet-black-700 focus:outline-none focus:ring-2 focus:ring-steel-blue-500 transition-colors"
+          aria-label="Previous testimonial"
+        >
+          <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+
+        <!-- Dot Indicators -->
+        <div class="flex items-center gap-2" id="carousel-dots">
+          {% for testimonial in testimonials %}
+            <button
+              type="button"
+              class="h-2.5 w-2.5 rounded-full bg-steel-blue-300 dark:bg-jet-black-600 hover:bg-steel-blue-500 transition-colors"
+              aria-label="Go to testimonial {{ forloop.counter }}"
+              aria-current="{% if forloop.first %}true{% else %}false{% endif %}"
+              data-slide="{{ forloop.counter0 }}"
+            ></button>
+          {% endfor %}
+        </div>
+
+        <button
+          type="button"
+          id="carousel-next"
+          class="p-2 rounded-full bg-white dark:bg-jet-black-800 border border-steel-blue-200 dark:border-jet-black-700 text-jet-black-600 dark:text-almond-cream-200 hover:bg-steel-blue-50 dark:hover:bg-jet-black-700 focus:outline-none focus:ring-2 focus:ring-steel-blue-500 transition-colors"
+          aria-label="Next testimonial"
+        >
+          <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var track = document.getElementById('testimonial-carousel-track');
+      var dots = document.getElementById('carousel-dots');
+      var prevBtn = document.getElementById('carousel-prev');
+      var nextBtn = document.getElementById('carousel-next');
+      if (!track || !dots) return;
+
+      var slides = track.children;
+      var total = slides.length;
+      var current = 0;
+
+      function getVisibleSlides() {
+        if (window.innerWidth >= 1024) return 3;
+        if (window.innerWidth >= 640) return 2;
+        return 1;
+      }
+
+      function goTo(index) {
+        var visible = getVisibleSlides();
+        var maxIndex = Math.max(0, total - visible);
+        current = Math.max(0, Math.min(index, maxIndex));
+        track.style.transform = 'translateX(-' + (current * (100 / visible)) + '%)';
+
+        // Update dots
+        var dotBtns = dots.querySelectorAll('button');
+        dotBtns.forEach(function (dot, i) {
+          dot.setAttribute('aria-current', i === current ? 'true' : 'false');
+          dot.classList.toggle('bg-steel-blue-500', i === current);
+          dot.classList.toggle('bg-steel-blue-300', i !== current);
+          dot.classList.toggle('dark:bg-jet-black-400', i !== current);
+        });
+      }
+
+      prevBtn?.addEventListener('click', function () { goTo(current - 1); });
+      nextBtn?.addEventListener('click', function () { goTo(current + 1); });
+
+      // Dot navigation
+      dots?.querySelectorAll('button').forEach(function (dot, i) {
+        dot.addEventListener('click', function () { goTo(i); });
+      });
+
+      // Autoplay (if enabled)
+      {% if autoplay %}
+        setInterval(function () {
+          var visible = getVisibleSlides();
+          var maxIndex = Math.max(0, total - visible);
+          goTo(current >= maxIndex ? 0 : current + 1);
+        }, {{ interval_ms|default:5000 }});
+      {% endif %}
+
+      window.addEventListener('resize', function () { goTo(current); });
+    })();
+  </script>
+</section>

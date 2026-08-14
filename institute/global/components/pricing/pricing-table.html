@@ -1,0 +1,94 @@
+<!--
+  Component: pricing-table.html
+  Purpose: Comparison table for different pricing plans. Displays features
+           across plans with checkmarks and pricing.
+
+  Context Variables:
+    - plans (list of dicts) — Each: { name (str), price (float), currency (str), period (str), is_recommended (bool), url_name (str), cta_label (str), features (list of dicts) }
+      Each feature: { name (str), included (bool) }
+    - feature_labels (list of str) — Shared feature labels across all plans.
+
+  HTMX Hooks: None — static comparison table.
+
+  SEO Notes:
+    - Uses <table> with proper <thead>, <tbody>, <caption>.
+    - Scope attributes on th elements.
+
+  Dependencies:
+    - Tailwind CSS
+-->
+
+<div class="overflow-x-auto">
+  <table class="w-full text-sm border-collapse" aria-label="Pricing comparison table">
+    <caption class="sr-only">Compare pricing plans</caption>
+
+    <thead>
+      <tr class="border-b-2 border-steel-blue-300 dark:border-jet-black-600">
+        <th scope="col" class="text-left py-4 px-4 text-jet-black-900 dark:text-almond-cream-50 font-bold">Features</th>
+        {% for plan in plans %}
+          <th scope="col" class="text-center py-4 px-4 {% if plan.is_recommended %}bg-sandy-brown-50 dark:bg-sandy-brown-900/20{% endif %}">
+            <div class="font-bold text-jet-black-900 dark:text-almond-cream-50">
+              {{ plan.name }}
+              {% if plan.is_recommended %}
+                <span class="block text-xs text-sandy-brown-600 dark:text-sandy-brown-400 font-medium mt-1">Recommended</span>
+              {% endif %}
+            </div>
+            <div class="mt-1 text-2xl font-bold text-steel-blue-700 dark:text-steel-blue-400">
+              {% if plan.currency == 'INR' %}₹{% elif plan.currency == 'EUR' %}€{% elif plan.currency == 'GBP' %}£{% else %}${% endif %}
+              {{ plan.price|floatformat:0 }}
+            </div>
+            <div class="text-xs text-jet-black-500 dark:text-almond-cream-400">/ {{ plan.period|default:"month" }}</div>
+          </th>
+        {% endfor %}
+      </tr>
+    </thead>
+
+    <tbody class="divide-y divide-steel-blue-100 dark:divide-jet-black-700">
+      {% for feature in feature_labels %}
+        <tr class="{% cycle 'bg-white dark:bg-jet-black-800' 'bg-almond-cream-50 dark:bg-jet-black-900' %}">
+          <td class="py-3 px-4 text-jet-black-800 dark:text-almond-cream-200 font-medium">
+            {{ feature }}
+          </td>
+          {% for plan in plans %}
+            <td class="text-center py-3 px-4 {% if plan.is_recommended %}bg-sandy-brown-50/50 dark:bg-sandy-brown-900/10{% endif %}">
+              {% if plan.features %}
+                {% for plan_feature in plan.features %}
+                  {% if plan_feature.name == feature %}
+                    {% if plan_feature.included %}
+                      <svg class="h-5 w-5 text-steel-blue-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                      </svg>
+                    {% else %}
+                      <svg class="h-5 w-5 text-jet-black-300 dark:text-jet-black-600 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    {% endif %}
+                    {% break %}
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
+            </td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+
+    <!-- CTA Row -->
+    <tfoot>
+      <tr class="border-t-2 border-steel-blue-200 dark:border-jet-black-700">
+        <td class="py-4 px-4"></td>
+        {% for plan in plans %}
+          <td class="text-center py-4 px-4 {% if plan.is_recommended %}bg-sandy-brown-50/50 dark:bg-sandy-brown-900/10{% endif %}">
+            <a
+              href="{% url plan.url_name %}"
+              class="inline-block px-5 py-2.5 text-sm font-semibold rounded-lg transition-all {% if plan.is_recommended %}text-white bg-sandy-brown-500 hover:bg-sandy-brown-400{% else %}text-steel-blue-600 dark:text-steel-blue-400 border border-steel-blue-300 dark:border-steel-blue-600 hover:bg-steel-blue-50 dark:hover:bg-jet-black-700{% endif %} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-steel-blue-500"
+              aria-label="Select {{ plan.name }} plan"
+            >
+              {{ plan.cta_label|default:"Get Started" }}
+            </a>
+          </td>
+        {% endfor %}
+      </tr>
+    </tfoot>
+  </table>
+</div>

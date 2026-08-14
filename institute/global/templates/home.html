@@ -1,0 +1,203 @@
+{% extends "base.html" %}
+
+{% block title %}{{ institute.name|default:"Computer Training Institute" }} — Build Your Tech Career with Expert-Led Courses{% endblock %}
+
+{% block meta_description %}Join 5,000+ students mastering Python, Web Development, Data Science, and more. Industry-certified instructors, hands-on projects, and career support. Enroll today.{% endblock %}
+
+{% block meta_keywords %}computer training, coding bootcamp, python courses, web development training, data science courses, django training, programming institute, tech career{% endblock %}
+
+{% block og_title %}{{ institute.name|default:"Computer Training Institute" }} — Expert Tech Training{% endblock %}
+
+{% block og_description %}Master industry-leading technologies with hands-on courses designed by professionals. 5000+ students trained, 120+ courses, 95% success rate.{% endblock %}
+
+{% block twitter_title %}{{ institute.name|default:"Computer Training Institute" }} — Expert Tech Training{% endblock %}
+
+{% block twitter_description %}Master industry-leading technologies with hands-on courses. 5000+ students, 120+ courses, 95% success rate.{% endblock %}
+
+{% block extra_head %}
+  <!-- Homepage-specific structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "{{ institute.name|default:'Computer Training Institute' }}",
+    "url": "{{ request.build_absolute_uri '/' }}",
+    "logo": "{{ institute.logo_url|default:'/static/images/logo.png' }}",
+    "description": "{{ institute.description|default:'Expert-led computer training programs for career growth.' }}",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "{{ institute.address.street|default:'123 Training St' }}",
+      "addressLocality": "{{ institute.address.city|default:'City' }}",
+      "addressRegion": "{{ institute.address.state|default:'State' }}",
+      "postalCode": "{{ institute.address.zip|default:'00000' }}",
+      "addressCountry": "{{ institute.address.country|default:'US' }}"
+    },
+    "telephone": "{{ institute.phone|default:'+1234567890' }}",
+    "email": "{{ institute.email|default:'info@example.com' }}",
+    "sameAs": [
+      "{{ institute.social.facebook|default:'' }}",
+      "{{ institute.social.twitter|default:'' }}",
+      "{{ institute.social.linkedin|default:'' }}",
+      "{{ institute.social.youtube|default:'' }}"
+    ],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "reviewCount": "{{ reviews.total_count|default:'1250' }}"
+    }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "{{ institute.name|default:'Computer Training Institute' }}",
+    "url": "{{ request.build_absolute_uri '/' }}",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "{{ request.build_absolute_uri }}{% url 'courses:search' %}?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+{% endblock %}
+
+{% block content %}
+
+  <!-- ============================================= -->
+  <!-- 1. NAVIGATION                                 -->
+  <!-- ============================================= -->
+  {% include "components/header/navbar.html" with
+    institute=institute
+    nav_links=nav_links
+    is_authenticated=is_authenticated
+    user=user
+  %}
+
+  <!-- ============================================= -->
+  <!-- 2. HERO SECTION                               -->
+  <!-- ============================================= -->
+  {% include "components/hero/hero.html" with hero=hero_data %}
+
+  <!-- ============================================= -->
+  <!-- 3. STATISTICS BANNER                          -->
+  <!-- ============================================= -->
+  {% include "components/hero/hero-stats.html" with stats=stats %}
+
+  <!-- ============================================= -->
+  <!-- 4. SEARCH BAR                                 -->
+  <!-- ============================================= -->
+  <section class="py-12 lg:py-16 bg-white dark:bg-jet-black-900" aria-label="Find a course">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-8">
+        <h2 class="text-3xl sm:text-4xl font-bold text-jet-black-900 dark:text-almond-cream-50 mb-3">
+          Find Your Perfect Course
+        </h2>
+        <p class="text-lg text-jet-black-700 dark:text-almond-cream-300">
+          Search from 120+ courses across all tech domains.
+        </p>
+      </div>
+      {% include "components/courses/search-bar.html" %}
+    </div>
+  </section>
+
+  <!-- ============================================= -->
+  <!-- 5. FEATURED COURSES                           -->
+  <!-- ============================================= -->
+  {% include "components/courses/course-grid.html" with
+    courses=featured_courses
+    has_next_page=has_more_courses
+    next_page_url=next_page_url
+  %}
+
+  <!-- ============================================= -->
+  <!-- 6. TESTIMONIAL CAROUSEL                       -->
+  <!-- ============================================= -->
+  {% include "components/testimonials/testimonial-carousel.html" with
+    testimonials=testimonials
+    autoplay=True
+    interval_ms=6000
+  %}
+
+  <!-- ============================================= -->
+  <!-- 7. INSTRUCTORS                                -->
+  <!-- ============================================= -->
+  {% include "components/instructors/instructor-grid.html" with
+    instructors=featured_instructors
+  %}
+
+  <!-- ============================================= -->
+  <!-- 8. PRICING PLANS                              -->
+  <!-- ============================================= -->
+  <section class="py-12 lg:py-16 bg-white dark:bg-jet-black-900" aria-label="Pricing plans">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl sm:text-4xl font-bold text-jet-black-900 dark:text-almond-cream-50 mb-3">
+          Simple, Transparent Pricing
+        </h2>
+        <p class="text-lg text-jet-black-700 dark:text-almond-cream-300 max-w-2xl mx-auto">
+          Choose the plan that fits your learning goals. All plans include lifetime access to course materials.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-5xl mx-auto">
+        {% for plan in pricing_plans %}
+          {% include "components/pricing/pricing-card.html" with plan=plan %}
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================= -->
+  <!-- 9. FAQ SECTION                                -->
+  <!-- ============================================= -->
+  {% include "components/faq/faq-section.html" with faq_categories=faq_categories %}
+
+  <!-- ============================================= -->
+  <!-- 10. NEWSLETTER SIGNUP                         -->
+  <!-- ============================================= -->
+  {% include "components/forms/newsletter-signup.html" %}
+
+  <!-- ============================================= -->
+  <!-- 11. CTA SECTION                               -->
+  <!-- ============================================= -->
+  {% include "components/forms/cta-section.html" with cta=cta_data %}
+
+{% endblock %}
+
+{% block footer %}
+  {% include "components/footer/footer.html" with
+    footer=footer_data
+  %}
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+  // Dark mode toggle based on user preference
+  (function () {
+    if (localStorage.getItem('theme') === 'dark' ||
+        (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    }
+  })();
+
+  // Show search results container when results arrive
+  document.body.addEventListener('htmx:afterSwap', function (evt) {
+    var searchResults = document.getElementById('search-results');
+    if (searchResults && evt.detail.target === searchResults) {
+      searchResults.classList.remove('hidden');
+    }
+  });
+
+  // Hide search results on click outside
+  document.addEventListener('click', function (evt) {
+    var searchResults = document.getElementById('search-results');
+    var searchInput = document.getElementById('course-search-input');
+    if (searchResults && !searchResults.contains(evt.target) &&
+        searchInput && !searchInput.contains(evt.target)) {
+      searchResults.classList.add('hidden');
+    }
+  });
+</script>
+{% endblock %}

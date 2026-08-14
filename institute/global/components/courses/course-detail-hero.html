@@ -1,0 +1,247 @@
+<!--
+  Component: course-detail-hero.html
+  Purpose: Large featured course card for course detail pages. Displays
+           comprehensive course information with enrollment CTA, pricing,
+           and key metadata. Includes schema.org Course structured data.
+
+  Context Variables:
+    - course.id (int) — Required
+    - course.title (str) — Required
+    - course.slug (str) — Required
+    - course.description (str) — Full description (may be HTML)
+    - course.instructor.name (str) — Instructor name
+    - course.instructor.slug (str) — Instructor URL slug
+    - course.instructor.avatar_url (str) — Instructor avatar image
+    - course.price (float) — Course price
+    - course.currency (str) — Currency code (default: "USD")
+    - course.original_price (float, optional) — Original/discounted price
+    - course.rating (float, 0-5) — Average rating
+    - course.review_count (int) — Number of reviews
+    - course.duration_weeks (int) — Duration in weeks
+    - course.lessons_count (int) — Total number of lessons
+    - course.students_enrolled (int) — Total enrolled students
+    - course.image_url (str) — Featured course image
+    - course.category (str) — Category name
+    - course.level (str) — 'beginner', 'intermediate', or 'advanced'
+    - course.start_date (str) — Next batch start date
+    - course.language (str) — Course language (default: "English")
+
+  HTMX Hooks:
+    - Enrollment form submission:
+      hx-post="{% url 'enrollment:create' %}"
+      hx-target="#enrollment-result"
+      hx-swap="innerHTML"
+    - Wishlist toggle:
+      hx-post="{% url 'courses:wishlist_toggle' course.id %}"
+      hx-swap="outerHTML"
+
+  SEO Notes:
+    - Uses <section> with schema.org Course microdata.
+    - Full Course properties including offers, aggregateRating, author.
+    - H1 heading for page title.
+
+  Dependencies:
+    - Tailwind CSS
+-->
+
+<section
+  class="relative bg-gradient-to-r from-steel-blue-700 via-steel-blue-800 to-deep-space-blue-800 py-12 lg:py-16"
+  itemscope
+  itemtype="https://schema.org/Course"
+  aria-label="Course details: {{ course.title }}"
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 items-start">
+
+      <!-- Course Info (2/3 width) -->
+      <div class="lg:col-span-2">
+        <h1
+          class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4"
+          itemprop="name"
+        >
+          {{ course.title }}
+        </h1>
+
+        <!-- Meta Row -->
+        <div class="flex flex-wrap items-center gap-4 text-steel-blue-200 text-sm mb-6">
+          {% if course.category %}
+            <a
+              href="{% url 'courses:by_category' course.category|slugify %}"
+              class="hover:text-white transition-colors"
+              itemprop="teaches"
+            >
+              {{ course.category }}
+            </a>
+          {% endif %}
+
+          <span class="flex items-center gap-1" aria-label="Level: {{ course.level|default:'All Levels' }}">
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            {{ course.level|default:"All Levels"|title }}
+          </span>
+
+          <span class="flex items-center gap-1">
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            {{ course.duration_weeks }} Weeks
+          </span>
+
+          <span class="flex items-center gap-1">
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
+            {{ course.lessons_count|default:0 }} Lessons
+          </span>
+
+          <span class="flex items-center gap-1">
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+            </svg>
+            {{ course.language|default:"English" }}
+          </span>
+        </div>
+
+        <!-- Rating -->
+        {% if course.rating %}
+          <div class="flex items-center gap-2 mb-6" itemprop="aggregateRating" itemscope itemtype="https://schema.org/AggregateRating">
+            <div class="flex" aria-label="Rating: {{ course.rating }} out of 5 stars">
+              {% for i in "12345"|make_list %}
+                {% if forloop.counter <= course.rating %}
+                  <svg class="h-5 w-5 text-sandy-brown-500" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                {% else %}
+                  <svg class="h-5 w-5 text-white/30" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                {% endif %}
+              {% endfor %}
+            </div>
+            <span class="text-white font-medium">{{ course.rating }}</span>
+            <span class="text-steel-blue-300">({{ course.review_count|default:0 }} reviews)</span>
+            <meta itemprop="ratingValue" content="{{ course.rating }}" />
+            <meta itemprop="reviewCount" content="{{ course.review_count|default:0 }}" />
+            <meta itemprop="bestRating" content="5" />
+          </div>
+        {% endif %}
+
+        <!-- Description -->
+        <p
+          class="text-lg text-steel-blue-100 leading-relaxed mb-6"
+          itemprop="description"
+        >
+          {{ course.description|default:"A comprehensive course covering essential topics in this field." }}
+        </p>
+
+        <!-- Instructor -->
+        {% if course.instructor.name %}
+          <div class="flex items-center gap-3">
+            {% if course.instructor.avatar_url %}
+              <img
+                src="{{ course.instructor.avatar_url }}"
+                alt="Photo of {{ course.instructor.name }}"
+                class="h-10 w-10 rounded-full object-cover"
+                loading="lazy"
+              />
+            {% else %}
+              <div class="h-10 w-10 rounded-full bg-steel-blue-500 flex items-center justify-center text-white font-bold text-sm">
+                {{ course.instructor.name|make_list|first|upper }}
+              </div>
+            {% endif %}
+            <div>
+              <p class="text-sm text-steel-blue-300">Instructor</p>
+              <a
+                href="{% url 'instructors:detail' course.instructor.slug %}"
+                class="text-white font-medium hover:underline"
+                itemprop="author"
+                itemscope
+                itemtype="https://schema.org/Person"
+              >
+                <span itemprop="name">{{ course.instructor.name }}</span>
+              </a>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- Enrollment Card (1/3 width, sticky) -->
+      <div class="lg:col-span-1">
+        <div class="bg-white dark:bg-jet-black-800 rounded-xl shadow-lg p-6 sticky top-24">
+          <!-- Pricing -->
+          <div class="mb-4">
+            {% if course.original_price and course.original_price > course.price %}
+              <span class="text-sm text-jet-black-500 line-through">
+                ${{ course.original_price|floatformat:0 }}
+              </span>
+            {% endif %}
+            <div class="text-3xl font-bold text-jet-black-900 dark:text-almond-cream-50" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+              <span itemprop="priceCurrency" content="{{ course.currency|default:'USD' }}">
+                {% if course.currency == 'INR' %}₹{% elif course.currency == 'EUR' %}€{% elif course.currency == 'GBP' %}£{% else %}${% endif %}
+              </span>
+              <span itemprop="price">{{ course.price|floatformat:0 }}</span>
+              <meta itemprop="availability" content="https://schema.org/InStock" />
+            </div>
+            {% if course.start_date %}
+              <p class="text-sm text-jet-black-600 dark:text-almond-cream-300 mt-1">
+                Next batch: <strong>{{ course.start_date }}</strong>
+              </p>
+            {% endif %}
+          </div>
+
+          <!-- Enroll Button -->
+          <div id="enrollment-result">
+            <form
+              hx-post="{% url 'enrollment:create' %}"
+              hx-target="#enrollment-result"
+              hx-swap="innerHTML"
+              hx-indicator="#enroll-spinner"
+            >
+              <input type="hidden" name="course_id" value="{{ course.id }}" />
+              <button
+                type="submit"
+                class="w-full px-6 py-3 text-base font-semibold rounded-lg text-white bg-steel-blue-600 hover:bg-steel-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-steel-blue-500 transition-all shadow-md"
+                aria-label="Enroll in {{ course.title }}"
+              >
+                Enroll Now
+              </button>
+              <div id="enroll-spinner" class="htmx-indicator mt-2 text-center">
+                <div class="flex items-center justify-center gap-2 text-sm text-steel-blue-600">
+                  <svg class="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Processing...
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <!-- Additional Info -->
+          <div class="mt-4 pt-4 border-t border-steel-blue-100 dark:border-jet-black-700 space-y-2 text-sm text-jet-black-600 dark:text-almond-cream-300">
+            <p class="flex items-center gap-2">
+              <svg class="h-4 w-4 text-steel-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+              {{ course.students_enrolled|default:0 }} students enrolled
+            </p>
+            <p class="flex items-center gap-2">
+              <svg class="h-4 w-4 text-steel-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
+              Certificate included
+            </p>
+            <p class="flex items-center gap-2">
+              <svg class="h-4 w-4 text-steel-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              Lifetime access
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

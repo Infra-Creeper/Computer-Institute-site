@@ -1,0 +1,74 @@
+<!--
+  Component: cta-button.html
+  Purpose: Reusable CTA button component with variants for primary, secondary,
+           and outline styles. Supports HTMX-triggered actions.
+
+  Context Variables:
+    - cta.label (str) — Required. Button text.
+    - cta.url (str, optional) — URL for the button. If empty, renders as button element.
+    - cta.url_name (str, optional) — Django URL name (alternative to url).
+    - cta.variant (str, optional) — 'primary' (default), 'secondary', 'outline'
+    - cta.size (str, optional) — 'sm', 'md' (default), 'lg'
+    - cta.htmx (dict, optional) — HTMX attributes: { get, post, target, swap, trigger }
+
+  HTMX Hooks:
+    - If cta.htmx is provided, button renders with HTMX attributes:
+      hx-get / hx-post, hx-target, hx-swap, hx-trigger
+
+  SEO Notes: None — purely interactive component.
+
+  Dependencies:
+    - Tailwind CSS
+-->
+
+{% if cta.url %}
+  <a
+    href="{{ cta.url }}"
+    class="{{ cta_variant_classes }}"
+    aria-label="{{ cta.label }}"
+  >
+    {{ cta.label }}
+  </a>
+{% elif cta.url_name %}
+  <a
+    href="{% url cta.url_name %}"
+    class="{{ cta_variant_classes }}"
+    aria-label="{{ cta.label }}"
+  >
+    {{ cta.label }}
+  </a>
+{% elif cta.htmx %}
+  <button
+    type="button"
+    {% if cta.htmx.get %}hx-get="{{ cta.htmx.get }}"{% endif %}
+    {% if cta.htmx.post %}hx-post="{{ cta.htmx.post }}"{% endif %}
+    {% if cta.htmx.target %}hx-target="{{ cta.htmx.target }}"{% endif %}
+    {% if cta.htmx.swap %}hx-swap="{{ cta.htmx.swap }}"{% endif %}
+    {% if cta.htmx.trigger %}hx-trigger="{{ cta.htmx.trigger }}"{% endif %}
+    class="{{ cta_variant_classes }}"
+    aria-label="{{ cta.label }}"
+  >
+    {{ cta.label }}
+  </button>
+{% else %}
+  <button
+    type="button"
+    class="{{ cta_variant_classes }}"
+    aria-label="{{ cta.label }}"
+  >
+    {{ cta.label }}
+  </button>
+{% endif %}
+
+<!--
+  Variant Classes (use in parent template or configure via custom class):
+
+  Primary:  "inline-flex items-center justify-center px-6 py-3 text-base font-semibold rounded-lg text-white bg-steel-blue-600 hover:bg-steel-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-steel-blue-500 transition-all shadow-md"
+  Secondary: "inline-flex items-center justify-center px-6 py-3 text-base font-semibold rounded-lg text-white bg-deep-space-blue-600 hover:bg-deep-space-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-deep-space-blue-500 transition-all"
+  Outline:   "inline-flex items-center justify-center px-6 py-3 text-base font-semibold rounded-lg text-steel-blue-600 dark:text-steel-blue-400 border-2 border-steel-blue-300 dark:border-steel-blue-600 hover:bg-steel-blue-50 dark:hover:bg-jet-black-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-steel-blue-500 transition-all"
+
+  Sizes:
+    sm: px-4 py-2 text-sm
+    md: px-6 py-3 text-base
+    lg: px-8 py-4 text-lg
+-->
