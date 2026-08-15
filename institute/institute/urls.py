@@ -16,8 +16,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-
+from django.views.generic.base import RedirectView
+from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("",include("home.urls"))
+    path("",include("home.urls")),
+    path('favicon.ico',
+        RedirectView.as_view(url=settings.STATIC_URL + 'images/favicon.ico', permanent=True)
+    ),
+    path('favicon.png',
+            RedirectView.as_view(url=settings.STATIC_URL + 'images/favicon.png', permanent=True)
+        ),
+    path('favicon.svg',
+                RedirectView.as_view(url=settings.STATIC_URL + 'images/favicon.svg', permanent=True)
+            ),
 ]

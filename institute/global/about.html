@@ -1,0 +1,7 @@
+{% extends 'base.html' %}{% block title %}About Us | {{ site_name }}{% endblock %}{% block meta_description %}Learn
+about our mission, instructors, and approach to computer education.{% endblock %}{% block content %}
+<script type="application/ld+json">{{ breadcrumb_schema_json|safe }}</script>
+<section class="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
+    <h1 class="text-4xl font-black text-deep-space-blue-950">About {{ site_name }}</h1>
+    <div class="prose mt-8 max-w-none">{{ about_content|safe }}</div>
+</section>{% endblock %}

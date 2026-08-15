@@ -1,0 +1,70 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{{ site_name|default:'TechBridge Computer Training Institute' }}{% endblock %}</title>
+  <meta name="description"
+    content="{% block meta_description %}{{ meta_description|default:'Practical computer training, career-focused courses, and expert instruction.' }}{% endblock %}">
+  <meta name="keywords"
+    content="{% block meta_keywords %}computer training, IT courses, digital skills, career training{% endblock %}">
+  <link rel="canonical"
+    href="{% block canonical_url %}{{ canonical_url|default:request.build_absolute_uri }}{% endblock %}">
+  <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
+  <link rel="apple-touch-icon" href="{% static 'images/favicon.png' %}">
+  <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+  <meta property="og:title" content="{% block og_title %}{{ self.title }}{% endblock %}">
+  <meta property="og:description" content="{% block og_description %}{{ self.meta_description }}{% endblock %}">
+  <meta property="og:url" content="{{ canonical_url|default:request.build_absolute_uri }}">
+  <meta property="og:image"
+    content="{% block og_image %}{{ og_image_url|default:'/static/images/og-default.jpg' }}{% endblock %}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ self.og_title }}">
+  <meta name="twitter:description" content="{{ self.og_description }}">
+  <meta name="twitter:image" content="{{ self.og_image }}">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { theme: { extend: { colors: { 'steel-blue': { 50: '#eef3f6', 100: '#dde8ee', 200: '#bcd0dc', 300: '#9ab9cb', 400: '#78a2ba', 500: '#578aa8', 600: '#456f87', 700: '#345365', 800: '#233743', 900: '#111c22', 950: '#0c1318' }, 'jet-black': { 50: '#eef2f6', 100: '#dde5ee', 200: '#bbcbdd', 300: '#99b1cc', 400: '#7797bb', 500: '#557daa', 600: '#446488', 700: '#334b66', 800: '#223244', 900: '#111922', 950: '#0c1118' }, 'sandy-brown': { 50: '#fdf2e7', 100: '#fbe4d0', 200: '#f8c9a0', 300: '#f4ae71', 400: '#f19341', 500: '#ed7812', 600: '#be600e', 700: '#8e480b', 800: '#5f3007', 900: '#2f1804', 950: '#211102' }, 'almond-cream': { 50: '#faf3eb', 100: '#f5e7d6', 200: '#eaceae', 300: '#e0b685', 400: '#d59d5d', 500: '#cb8534', 600: '#a26a2a', 700: '#7a501f', 800: '#513515', 900: '#291b0a', 950: '#1c1307' }, 'deep-space-blue': { 50: '#eaf3fa', 100: '#d5e6f6', 200: '#accdec', 300: '#82b4e3', 400: '#599bd9', 500: '#2f82d0', 600: '#2668a6', 700: '#1c4e7d', 800: '#133453', 900: '#091a2a', 950: '#07121d' } } } } }</script>
+  <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+  {% block extra_head %}{% endblock %}
+</head>
+
+<body class="min-h-screen bg-steel-blue-50 text-jet-black-900" hx-boost="true">
+  <header class="bg-deep-space-blue-950 text-white shadow-lg">
+    <nav class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8"
+      aria-label="Main navigation"><a href="/" class="text-3xl font-bold tracking-tight">{{ site_name|default:'TechBridgeInstitute' }}</a>
+      <div class="hidden gap-6 md:flex"><a href="/courses/" class="hover:text-almond-cream-300">Courses</a><a
+          href="/notices/" class="hover:text-almond-cream-300">Notices</a><a href="/blog/"
+          class="hover:text-almond-cream-300">Blog</a><a href="/about/" class="hover:text-almond-cream-300">About</a><a
+          href="/contact/" class="hover:text-almond-cream-300">Contact</a></div><a href="/admission/"
+        class="rounded-lg bg-sandy-brown-500 px-4 py-2 font-semibold text-white hover:bg-sandy-brown-600">Apply now</a>
+    </nav>
+  </header>
+  <div id="global-toast" class="fixed right-4 top-4 z-50 w-full max-w-sm" aria-live="polite">{% block toast %}{%endblock %}</div>
+  <main>{% block content %}{% endblock %}</main>
+  <footer class="bg-jet-black-950 text-steel-blue-100">
+    <div class="mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:grid-cols-3 sm:px-6 lg:px-8">
+      <div>
+        <h2 class="text-lg font-bold text-white">{{ site_name|default:'TechBridge Institute' }}</h2>
+        <p class="mt-3 text-sm">{{ site_tagline|default:'Build practical skills. Create your next opportunity.' }}</p>
+      </div>
+      <div>
+        <h2 class="font-semibold text-white">Explore</h2>
+        <div class="mt-3 space-y-2 text-sm"><a class="block hover:text-white" href="/courses/">Courses</a><a
+            class="block hover:text-white" href="/notices/">Notice board</a><a class="block hover:text-white"
+            href="/blog/">Learning resources</a></div>
+      </div>
+      <div>
+        <h2 class="font-semibold text-white">Contact</h2>
+        <p class="mt-3 text-sm">{{ institute.email|default:'hello@example.edu' }}<br>{{ institute.phone|default:'+00 000
+          000 0000' }}</p>
+      </div>
+    </div>
+    <div class="border-t border-jet-black-800 px-4 py-4 text-center text-xs text-steel-blue-300">© {% now 'Y' %} {{
+      site_name|default:'TechBridge Institute' }}. All rights
+      reserved.<!-- sitemap.xml and robots.txt will be added at the Django project level. --></div>
+  </footer>
+</body>
+
+</html>

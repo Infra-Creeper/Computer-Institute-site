@@ -1,0 +1,83 @@
+{% extends 'base.html' %}{% block title %}Empowering Digital Future | {{ site_name|default:'Compuetech' }}{% endblock %}{% block meta_description %}Learn practical computer and digital skills with career-focused
+courses and expert instructors.{% endblock %}{% block content %}
+<script type="application/ld+json">{{ organization_schema_json|safe }}</script>
+<section class="bg-deep-space-blue-950 text-white">
+    <div class="mx-auto grid max-w-7xl gap-10 px-4 py-20 sm:px-6 lg:grid-cols-2 lg:px-8 lg:py-28">
+        <div>
+            <p class="font-semibold uppercase tracking-widest text-almond-cream-300">Learn. Practice. Progress.</p>
+            <h1 class="mt-4 text-4xl font-black tracking-tight sm:text-6xl">Skills that move your career forward.</h1>
+            <p class="mt-6 max-w-xl text-lg text-steel-blue-100">{{ hero_text|default:'Gain job-ready computer skills
+                through practical lessons, supportive mentors, and flexible learning paths.' }}</p><a href="/courses/"
+                class="mt-8 inline-block rounded-xl bg-sandy-brown-500 px-6 py-3 font-bold hover:bg-sandy-brown-600">Explore
+                courses</a>
+        </div>
+        <div class="rounded-3xl bg-deep-space-blue-800 p-8 ring-1 ring-steel-blue-700">
+            <h2 class="text-2xl font-bold">Start with the right course</h2>
+            <p class="mt-3 text-steel-blue-100">From office productivity to advanced development, find a practical path
+                for your goals.</p>
+            <div class="mt-8 grid grid-cols-2 gap-4 text-center">
+                <div class="rounded-xl bg-deep-space-blue-900 p-4"><strong
+                        class="block text-3xl text-almond-cream-300">{{ stats.learners|default:'2k+' }}</strong><span
+                        class="text-sm">Learners</span></div>
+                <div class="rounded-xl bg-deep-space-blue-900 p-4"><strong
+                        class="block text-3xl text-almond-cream-300">{{ stats.courses|default:'20+' }}</strong><span
+                        class="text-sm">Courses</span></div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+    <h2 class="text-3xl font-bold text-deep-space-blue-950">Why choose us</h2>
+    <div class="mt-8 grid gap-6 md:grid-cols-3">{% for item in benefits %}<article
+            class="rounded-2xl bg-white p-6 ring-1 ring-steel-blue-100">
+            <h3 class="text-xl font-bold">{{ item.title }}</h3>
+            <p class="mt-2 text-jet-black-600">{{ item.description }}</p>
+        </article>{% empty %}<article class="rounded-2xl bg-white p-6 ring-1 ring-steel-blue-100">
+            <h3 class="text-xl font-bold">Practical learning</h3>
+            <p class="mt-2 text-jet-black-600">Build confidence through guided exercises and real-world projects.</p>
+        </article>
+        <article class="rounded-2xl bg-white p-6 ring-1 ring-steel-blue-100">
+            <h3 class="text-xl font-bold">Supportive instructors</h3>
+            <p class="mt-2 text-jet-black-600">Learn with mentors who make difficult concepts approachable.</p>
+        </article>
+        <article class="rounded-2xl bg-white p-6 ring-1 ring-steel-blue-100">
+            <h3 class="text-xl font-bold">Flexible pathways</h3>
+            <p class="mt-2 text-jet-black-600">Choose schedules and courses that fit your ambitions.</p>
+        </article>{% endfor %}
+    </div>
+</section>
+<section class="bg-steel-blue-100">
+    <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <div class="flex items-end justify-between">
+            <div>
+                <p class="font-semibold text-sandy-brown-600">Featured learning</p>
+                <h2 class="mt-2 text-3xl font-bold text-deep-space-blue-950">Popular courses</h2>
+            </div><a href="/courses/" class="font-semibold text-deep-space-blue-700">View all</a>
+        </div>
+        <div id="featured-courses" class="mt-8 grid gap-6 md:grid-cols-3" hx-get="/api/courses/featured/"
+            hx-trigger="load" hx-swap="innerHTML" hx-indicator="#featured-courses-spinner"><span
+                id="featured-courses-spinner" class="htmx-indicator col-span-full text-sm">Loading courses…</span></div>
+    </div>
+</section>
+<section class="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:px-8">
+    <div>
+        <h2 class="text-2xl font-bold">Latest notices</h2>
+        <div class="mt-4" hx-get="/api/notices/latest/" hx-trigger="load" hx-swap="innerHTML"><span
+                class="text-sm">Loading notices…</span></div>
+    </div>
+    <div>
+        <h2 class="text-2xl font-bold">From the blog</h2>
+        <div class="mt-4 grid gap-4" hx-get="/api/blog/latest/" hx-trigger="load" hx-swap="innerHTML"><span
+                class="text-sm">Loading posts…</span></div>
+    </div>
+</section>
+<section class="bg-sandy-brown-500">
+    <div
+        class="mx-auto flex max-w-7xl flex-col items-start justify-between gap-5 px-4 py-12 text-white sm:px-6 md:flex-row md:items-center lg:px-8">
+        <div>
+            <h2 class="text-3xl font-bold">Ready to begin?</h2>
+            <p class="mt-2 text-sandy-brown-50">Take the next step toward your learning goals.</p>
+        </div><a href="/admission/" class="rounded-xl bg-jet-black-950 px-6 py-3 font-bold hover:bg-jet-black-800">Apply
+            for admission</a>
+    </div>
+</section>{% endblock %}

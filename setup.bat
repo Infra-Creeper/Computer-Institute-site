@@ -1,3 +1,3 @@
 env\Scripts\activate.bat
 
-cd institute
+cd /d institute
