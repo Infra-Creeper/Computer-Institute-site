@@ -1,6 +1,68 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
+@theme {
+  --color-steel-blue-50: #eef3f6;
+  --color-steel-blue-100: #dde8ee;
+  --color-steel-blue-200: #bcd0dc;
+  --color-steel-blue-300: #9ab9cb;
+  --color-steel-blue-400: #78a2ba;
+  --color-steel-blue-500: #578aa8;
+  --color-steel-blue-600: #456f87;
+  --color-steel-blue-700: #345365;
+  --color-steel-blue-800: #233743;
+  --color-steel-blue-900: #111c22;
+  --color-steel-blue-950: #0c1318;
+
+  --color-jet-black-50: #eef2f6;
+  --color-jet-black-100: #dde5ee;
+  --color-jet-black-200: #bbcbdd;
+  --color-jet-black-300: #99b1cc;
+  --color-jet-black-400: #7797bb;
+  --color-jet-black-500: #557daa;
+  --color-jet-black-600: #446488;
+  --color-jet-black-700: #334b66;
+  --color-jet-black-800: #223244;
+  --color-jet-black-900: #111922;
+  --color-jet-black-950: #0c1118;
+
+  --color-sandy-brown-50: #fdf2e7;
+  --color-sandy-brown-100: #fbe4d0;
+  --color-sandy-brown-200: #f8c9a0;
+  --color-sandy-brown-300: #f4ae71;
+  --color-sandy-brown-400: #f19341;
+  --color-sandy-brown-500: #ed7812;
+  --color-sandy-brown-600: #be600e;
+  --color-sandy-brown-700: #8e480b;
+  --color-sandy-brown-800: #5f3007;
+  --color-sandy-brown-900: #2f1804;
+  --color-sandy-brown-950: #211102;
+
+  --color-almond-cream-50: #faf3eb;
+  --color-almond-cream-100: #f5e7d6;
+  --color-almond-cream-200: #eaceae;
+  --color-almond-cream-300: #e0b685;
+  --color-almond-cream-400: #d59d5d;
+  --color-almond-cream-500: #cb8534;
+  --color-almond-cream-600: #a26a2a;
+  --color-almond-cream-700: #7a501f;
+  --color-almond-cream-800: #513515;
+  --color-almond-cream-900: #291b0a;
+  --color-almond-cream-950: #1c1307;
+
+  --color-deep-space-blue-50: #eaf3fa;
+  --color-deep-space-blue-100: #d5e6f6;
+  --color-deep-space-blue-200: #accdec;
+  --color-deep-space-blue-300: #82b4e3;
+  --color-deep-space-blue-400: #599bd9;
+  --color-deep-space-blue-500: #2f82d0;
+  --color-deep-space-blue-600: #2668a6;
+  --color-deep-space-blue-700: #1c4e7d;
+  --color-deep-space-blue-800: #133453;
+  --color-deep-space-blue-900: #091a2a;
+  --color-deep-space-blue-950: #07121d;
+}
+
 /**
   * A catch-all path to Django template files, JavaScript, and Python files
   * that contain Tailwind CSS classes and will be scanned by Tailwind to generate the final CSS file.

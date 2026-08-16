@@ -1,4 +1,4 @@
-{% load static %}
+{% load static tailwind_tags %}
 <!doctype html>
 <html lang="en">
 
@@ -24,8 +24,9 @@
   <meta name="twitter:title" content="{{ self.og_title }}">
   <meta name="twitter:description" content="{{ self.og_description }}">
   <meta name="twitter:image" content="{{ self.og_image }}">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="{% static 'tailwind_colors.js' %}"></script>
+  {% comment %} <script src="https://cdn.tailwindcss.com"></script> {% endcomment %}
+  {% comment %} <script src="{% static 'tailwind_colors.js' %}"></script> {% endcomment %}
+  {% tailwind_css %}
   <script src="https://unpkg.com/htmx.org@2.0.4"></script>
   <link href="https://db.onlinewebfonts.com/c/b5097528420d7ecf74020d4df7339162?family=AR+DESTINE" rel="stylesheet"> 
   {% block extra_head %}{% endblock %}

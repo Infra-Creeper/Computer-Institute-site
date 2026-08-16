@@ -1,1 +1,23 @@
-{% extends 'base.html' %}{% block title %}Courses | {{ site_name }}{% endblock %}{% block meta_description %}Browse computer training courses and find the right learning path.{% endblock %}{% block content %}<script type="application/ld+json">{{ breadcrumb_schema_json|safe }}</script><section class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8"><p class="font-semibold text-sandy-brown-600">Learn with purpose</p><h1 class="mt-2 text-4xl font-black text-deep-space-blue-950">Course catalog</h1><form class="mt-8 grid gap-4 rounded-2xl bg-white p-5 shadow-sm ring-1 ring-steel-blue-100 sm:grid-cols-3" hx-get="/api/courses/" hx-target="#course-grid" hx-swap="innerHTML" hx-indicator="#course-spinner"><label class="sm:col-span-2"><span class="mb-1 block text-sm font-semibold">Search courses</span><input name="search" value="{{ request.GET.search }}" placeholder="Search by course name or skill" class="w-full rounded-lg border-steel-blue-200" hx-get="/api/courses/?search=&category=" hx-target="#course-grid" hx-trigger="keyup changed delay:400ms" hx-indicator="#course-spinner"></label><label><span class="mb-1 block text-sm font-semibold">Category</span><select name="category" class="w-full rounded-lg border-steel-blue-200"><option value="">All categories</option>{% for category in categories %}<option value="{{ category.slug }}">{{ category.name }}</option>{% endfor %}</select></label></form><span id="course-spinner" class="htmx-indicator mt-4 block text-sm">Updating results…</span><div id="course-grid" class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">{% for course in courses %}{% include 'partials/_course_card.html' %}{% empty %}<p class="col-span-full text-jet-black-600">No courses found.</p>{% endfor %}</div></section>{% endblock %}
+{% extends 'base.html' %}{% block title %}Courses | {{ site_name }}{% endblock %}{% block meta_description %}Browse
+computer training courses and find the right learning path.{% endblock %}{% block content %}
+<script type="application/ld+json">{{ breadcrumb_schema_json|safe }}</script>
+<section class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+    <p class="font-semibold text-sandy-brown-600">Learn with purpose</p>
+    <h1 class="mt-2 text-4xl font-black text-deep-space-blue-950">Course catalog</h1>
+    <form class="mt-8 grid gap-4 rounded-2xl bg-white p-5 shadow-sm ring-1 ring-steel-blue-100 sm:grid-cols-3"
+        hx-get="/api/courses/" hx-target="#course-grid" hx-swap="innerHTML" hx-indicator="#course-spinner"><label
+            class="sm:col-span-2"><span class="mb-1 block text-sm font-semibold">Search courses</span><input
+                name="search" value="{{ request.GET.search }}" placeholder="Search by course name or skill"
+                class="w-full rounded-lg border-steel-blue-200" hx-get="/api/courses/?search=&category="
+                hx-target="#course-grid" hx-trigger="keyup changed delay:400ms"
+                hx-indicator="#course-spinner"></label><label><span
+                class="mb-1 block text-sm font-semibold">Category</span><select name="category"
+                class="w-full rounded-lg border-steel-blue-200">
+                <option value="">All categories</option>{% for category in categories %}<option
+                    value="{{ category.slug }}">{{ category.name }}</option>{% endfor %}
+            </select></label></form><span id="course-spinner" class="htmx-indicator mt-4 block text-sm">Updating
+        results…</span>
+    <div id="course-grid" class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">{% for course in courses %}{% include
+        'partials/_course_card.html' %}{% empty %}<p class="col-span-full text-jet-black-600">No courses found.</p>{%
+        endfor %}</div>
+</section>{% endblock %}

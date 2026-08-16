@@ -6,3 +6,6 @@ home_context ={
 # Create your views here.
 def home(request):
     return render(request,"home.html",context=home_context)
+
+def courses(request):
+    return render(request,"courses/list.html")
