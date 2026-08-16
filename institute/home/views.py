@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 home_context = {
-    'site_name': 'Compuetech'
+    'site_name': 'Compuetech',
 }
 
 

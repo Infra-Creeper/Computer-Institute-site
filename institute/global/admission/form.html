@@ -1,1 +1,91 @@
-{% extends 'base.html' %}{% block title %}Apply for Admission | {{ site_name }}{% endblock %}{% block meta_description %}Submit your application for a computer training course.{% endblock %}{% block content %}<script type="application/ld+json">{{ breadcrumb_schema_json|safe }}</script><section class="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:px-8"><h1 class="text-4xl font-black text-deep-space-blue-950">Admission application</h1><p class="mt-3 text-jet-black-600">Complete the form and our admissions team will contact you.</p><form id="admission-form" class="mt-8 space-y-6 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-steel-blue-100" method="post" enctype="multipart/form-data" action="/api/admission/submit/" hx-post="/api/admission/submit/" hx-target="#form-response" hx-swap="outerHTML" hx-indicator="#form-spinner">{% csrf_token %}<div class="grid gap-5 sm:grid-cols-2"><label><span class="mb-1 block text-sm font-semibold">Full name *</span><input name="full_name" required pattern="[A-Za-zÀ-ÿ' -]{2,100}" class="w-full rounded-lg border-steel-blue-200"></label><label><span class="mb-1 block text-sm font-semibold">Email *</span><input type="email" name="email" required class="w-full rounded-lg border-steel-blue-200"></label><label><span class="mb-1 block text-sm font-semibold">Phone *</span><input type="tel" name="phone" required pattern="[0-9+() -]{7,20}" class="w-full rounded-lg border-steel-blue-200"></label><label><span class="mb-1 block text-sm font-semibold">Date of birth</span><input type="date" name="dob" class="w-full rounded-lg border-steel-blue-200"></label><label class="sm:col-span-2"><span class="mb-1 block text-sm font-semibold">Address *</span><textarea name="address" required rows="3" class="w-full rounded-lg border-steel-blue-200"></textarea></label><label><span class="mb-1 block text-sm font-semibold">Course *</span><select name="course" required class="w-full rounded-lg border-steel-blue-200"><option value="">Select a course</option>{% for course in courses %}<option value="{{ course.slug }}" {% if request.GET.course == course.slug %}selected{% endif %}>{{ course.title }}</option>{% endfor %}</select></label><label><span class="mb-1 block text-sm font-semibold">Preferred batch / timing *</span><input name="preferred_batch" required placeholder="e.g. Weekday evenings" class="w-full rounded-lg border-steel-blue-200"></label><label><span class="mb-1 block text-sm font-semibold">Highest qualification *</span><input name="qualification" required class="w-full rounded-lg border-steel-blue-200"></label><label><span class="mb-1 block text-sm font-semibold">ID proof / photo</span><input type="file" name="document" accept="image/*,.pdf" class="w-full rounded-lg border border-steel-blue-200 p-2"></label></div><button type="submit" class="rounded-xl bg-sandy-brown-500 px-6 py-3 font-bold text-white hover:bg-sandy-brown-600">Submit application</button><span id="form-spinner" class="htmx-indicator ml-3 text-sm">Submitting…</span><div id="form-response" class="text-sm" aria-live="polite"></div></form></section>{% endblock %}
+{% extends 'base.html' %}
+{% block title %}Apply for Admission | {{ site_name }}{% endblock %}
+{% block meta_description %}Submit your application for a computer training course.{% endblock %}
+{% block content %}
+<script type="application/ld+json">{{ breadcrumb_schema_json|safe }}</script>
+<section class="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:px-8">
+  <h1 class="text-4xl font-black text-deep-space-blue-950">Admission application</h1>
+  <p class="mt-3 text-jet-black-600">Complete the form and our admissions team will contact you.</p>
+
+  <form id="admission-form" class="mt-8 space-y-6 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-steel-blue-100" method="post" enctype="multipart/form-data" action="/api/admission/submit/" hx-post="/api/admission/submit/" hx-target="#form-response" hx-swap="outerHTML" hx-indicator="#form-spinner">
+    {% csrf_token %}
+
+    <div class="grid gap-5 sm:grid-cols-2">
+      <label class="sm:col-span-2">
+        <span class="mb-1 block text-sm font-semibold">Course Name *</span>
+        <select name="course_name" required class="border text-lg w-full rounded-lg border-steel-blue-400 px-4 py-3">
+          <option value="">Select a course</option>
+          {% for course in courses %}
+            <option value="{{ course.slug }}" {% if request.GET.course == course.slug %}selected{% endif %}>{{ course.title }}</option>
+          {% endfor %}
+        </select>
+      </label>
+
+      <label class="sm:col-span-2">
+        <span class="mb-1 block text-sm font-semibold">Name *</span>
+        <input type="text" name="name" required pattern="[A-Za-zÀ-ÿ' -]{2,100}" autocomplete="name" class="border text-lg w-full rounded-lg border-steel-blue-400 px-4 py-3">
+      </label>
+
+      <label class="sm:col-span-2">
+        <span class="mb-1 block text-sm font-semibold">S/o,D/o</span>
+        <input type="text" name="so" pattern="[A-Za-zÀ-ÿ' -]{2,100}" class="border text-lg w-full rounded-lg border-steel-blue-400 px-4 py-3">
+      </label>
+
+
+      <label class="sm:col-span-2">
+        <span class="mb-1 block text-sm font-semibold">Address *</span>
+        <textarea name="address" required rows="3" autocomplete="street-address" class="border text-lg w-full rounded-lg border-steel-blue-400 px-4 py-3"></textarea>
+      </label>
+
+      <label>
+        <span class="mb-1 block text-sm font-semibold">DOB *</span>
+        <input type="date" name="dob" required autocomplete="bday" class="border text-lg w-full rounded-lg border-steel-blue-400 px-4 py-3">
+      </label>
+
+      <label>
+        <span class="mb-1 block text-sm font-semibold">Gender *</span>
+        <select name="gender" required class="border text-lg w-full rounded-lg border-steel-blue-400 px-4 py-3">
+          <option value="">Select gender</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
+          <option value="prefer_not_to_say">Prefer not to say</option>
+        </select>
+      </label>
+
+      <label>
+        <span class="mb-1 block text-sm font-semibold">Contact No. *</span>
+        <input type="tel" name="contact_no" required pattern="[0-9+() -]{7,20}" autocomplete="tel" class="border text-lg w-full rounded-lg border-steel-blue-400 px-4 py-3">
+      </label>
+
+      <label>
+        <span class="mb-1 block text-sm font-semibold">Nationality *</span>
+        <input type="text" name="nationality" required autocomplete="country-name" class="border text-lg w-full rounded-lg border-steel-blue-400 px-4 py-3">
+      </label>
+
+      <label>
+        <span class="mb-1 block text-sm font-semibold">Category *</span>
+        <select name="category" required class="border text-lg w-full rounded-lg border-steel-blue-400 px-4 py-3">
+          <option value="">Select category</option>
+          <option value="ST">ST</option>
+          <option value="SC">SC</option>
+          <option value="OBC">OBC</option>
+          <option value="IRDP">IRDP</option>
+          <option value="BPL">BPL</option>
+          <option value="General">General</option>
+          <option value="Other">Other</option>
+        </select>
+      </label>
+
+      <label>
+        <span class="mb-1 block text-sm font-semibold">Highest Qualification *</span>
+        <input type="text" name="highest_qualification" required class="border text-lg w-full rounded-lg border-steel-blue-400 px-4 py-3">
+      </label>
+    </div>
+
+    <button type="submit" class="border text-lg rounded-xl bg-sandy-brown-500 px-6 py-3 font-bold text-white hover:bg-sandy-brown-600">Submit application</button>
+    <span id="form-spinner" class="htmx-indicator ml-3 text-sm">Submitting…</span>
+    <div id="form-response" class="text-sm" aria-live="polite"></div>
+  </form>
+</section>
+{% endblock %}

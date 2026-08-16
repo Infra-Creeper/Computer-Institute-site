@@ -2,8 +2,8 @@
 courses and expert instructors.{% endblock %}{% block content %}
 {% load static %}
 <script type="application/ld+json">{{ organization_schema_json|safe }}</script>
-<section class="bg-deep-space-blue-950 text-white">
-    <div class="mx-auto grid max-w-7xl gap-10 w-fullṭ px-4 py-20 sm:px-6 lg:grid-cols-3 lg:px-8 lg:py-28 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.7),rgba(0,0,0,0)),url('{% static 'images/hero.jpg' %}')] bg-cover bg-center ">
+<section class="text-white w-screen animated-background h-screen bg-gradient-to-r from-deep-space-blue-800 via-jet-black-500 to-steel-blue-500">
+    <div class="mx-auto grid max-w-7xl gap-10 w-full px-4 py-20 sm:px-6 lg:grid-cols-3 lg:px-8 lg:py-28 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.7),rgba(0,0,0,0)),url('{% static 'images/hero.jpg' %}')] bg-cover bg-center ">
         <div>
             <p class="font-semibold uppercase tracking-widest text-almond-cream-300">Learn. Practice. Progress.</p>
             <h1 class="mt-4 text-4xl font-black tracking-tight sm:text-6xl">Skills that move your career forward.</h1>
@@ -25,6 +25,22 @@ courses and expert instructors.{% endblock %}{% block content %}
                 <div class="rounded-xl bg-deep-space-blue-900 p-4"><strong
                         class="block text-3xl text-almond-cream-300">{{ stats.courses|default:'20+' }}</strong><span
                         class="text-sm">Courses</span></div>
+                <div class="col-span-2 rounded-xl bg-deep-space-blue-900 p-4">
+                    <div class="flex items-center gap-4">
+                        <img src="{% static 'images/iso logo.png' %}"
+                             alt="ISO 9001:2015 Certification"
+                             class="h-32 w-32 object-contain shrink-0">
+                    
+                        <div class="text-left">
+                            <strong class="block text-lg font-semibold text-almond-cream-300">
+                                ISO 9001:2015 Certified
+                            </strong>
+                            <span class="text-sm text-steel-blue-100">
+                                Committed to maintaining quality standards in computer education.
+                            </span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -36,16 +52,16 @@ courses and expert instructors.{% endblock %}{% block content %}
             <h3 class="text-xl font-bold">{{ item.title }}</h3>
             <p class="mt-2 text-jet-black-600">{{ item.description }}</p>
         </article>{% empty %}<article class="rounded-2xl bg-white p-6 ring-1 ring-steel-blue-100">
-            <h3 class="text-xl font-bold">Practical learning</h3>
-            <p class="mt-2 text-jet-black-600">Build confidence through guided exercises and real-world projects.</p>
+            <h3 class="text-xl font-bold">High Affordability</h3>
+            <p class="mt-2 text-jet-black-600">Quality computer education at affordable fees for everyone.</p>
         </article>
         <article class="rounded-2xl bg-white p-6 ring-1 ring-steel-blue-100">
-            <h3 class="text-xl font-bold">Supportive instructors</h3>
-            <p class="mt-2 text-jet-black-600">Learn with mentors who make difficult concepts approachable.</p>
+            <h3 class="text-xl font-bold">Flexible Batch Timings</h3>
+            <p class="mt-2 text-jet-black-600">Choose convenient timings that fit your daily schedule.</p>
         </article>
         <article class="rounded-2xl bg-white p-6 ring-1 ring-steel-blue-100">
-            <h3 class="text-xl font-bold">Flexible pathways</h3>
-            <p class="mt-2 text-jet-black-600">Choose schedules and courses that fit your ambitions.</p>
+            <h3 class="text-xl font-bold">100% Practical Training</h3>
+            <p class="mt-2 text-jet-black-600">Learn through hands-on practice and real-world computer applications.</p>
         </article>{% endfor %}
     </div>
 </section>
