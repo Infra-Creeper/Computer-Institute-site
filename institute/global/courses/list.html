@@ -18,6 +18,7 @@ computer training courses and find the right learning path.{% endblock %}{% bloc
             </select></label></form><span id="course-spinner" class="htmx-indicator mt-4 block text-sm">Updating
         results…</span>
     <div id="course-grid" class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">{% for course in courses %}{% include
-        'partials/_course_card.html' %}{% empty %}<p class="col-span-full text-jet-black-600">No courses found.</p>{%
-        endfor %}</div>
+        'partials/_course_card.html' %}{% empty %}<p class="col-span-full text-jet-black-600">No courses found.</p>
+        {%endfor %}
+    </div>
 </section>{% endblock %}
