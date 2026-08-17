@@ -15,15 +15,11 @@
   <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
   <link rel="apple-touch-icon" href="{% static 'images/favicon.png' %}">
   <meta property="og:type" content="{% block og_type %}website{% endblock %}">
-  <meta property="og:title" content="{% block og_title %}{{ self.title }}{% endblock %}">
-  <meta property="og:description" content="{% block og_description %}{{ self.meta_description }}{% endblock %}">
-  <meta property="og:url" content="{{ canonical_url|default:request.build_absolute_uri }}">
-  <meta property="og:image"
-    content="{% block og_image %}{{ og_image_url|default:'/static/images/og-default.jpg' }}{% endblock %}">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="{{ self.og_title }}">
-  <meta name="twitter:description" content="{{ self.og_description }}">
-  <meta name="twitter:image" content="{{ self.og_image }}">
+  <meta name="description" content="Compuetech is a Computer training courses that teaches job ready skills in Software, Hardware and Networking located at Dhanubhanga, Goalpara, Assam, India. We ">
+  <meta name="keywords" content="computer training, computer training near me, computer based training, computer technician training, affordable computer institute, ADCA course near me, computer institute near me, computer classes near me, computer training institute near me, best comput">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="EN">
+  <meta name="rating" content="general">
   {% comment %} <script src="https://cdn.tailwindcss.com"></script> {% endcomment %}
   {% comment %} <script src="{% static 'tailwind_colors.js' %}"></script> {% endcomment %}
   {% tailwind_css %}
@@ -35,7 +31,11 @@
 <body class="min-h-screen bg-steel-blue-50 text-jet-black-900" hx-boost="true">
   <header class="bg-deep-space-blue-700 text-white shadow-lg">
     <nav class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8 w-full"
-      aria-label="Main navigation"><img src="{% static 'images/logo.png' %}" alt="logo" class="h-12"><a href="/" class="text-3xl font-bold tracking-wide font-stretch-50%" style="font-family: 'AR DESTINE';">{{ site_name|default:'Compuetech' }}</a>
+      aria-label="Main navigation"><img src="{% static 'images/logo.png' %}" alt="logo" class="h-12">
+      <div class="flex flex-col space-y-1">
+        <span><a href="/" class="text-3xl font-bold tracking-wide font-stretch-50%" style="font-family: 'AR DESTINE';">{{ site_name|default:'Compuetech' }}</a></span>
+        <span class="text-xs ">Computer training institute</span>
+      </div>
       <div class="hidden gap-6 md:flex"><a href="/courses/" class="hover:text-almond-cream-300">Courses</a><a
           href="/notices/" class="hover:text-almond-cream-300">Notices</a><a href="/blog/"
           class="hover:text-almond-cream-300">Blog</a><a href="/about/" class="hover:text-almond-cream-300">About</a><a
@@ -62,9 +62,7 @@
         <p class="mt-3 text-sm">kakilnath@gmail.com<br>+91 700-261-6276</p>
       </div>
     </div>
-    <div class="border-t border-jet-black-800 px-4 py-4 text-center text-xs text-steel-blue-300">© {% now 'Y' %} {{
-      site_name|default:'TechBridge Institute' }}. All rights
-      reserved.<!-- sitemap.xml and robots.txt will be added at the Django project level. --></div>
+    <div class="border-t border-jet-black-800 px-4 py-4 text-center text-xs text-steel-blue-300">© {% now 'Y' %} {{site_name|default:'TechBridge Institute' }}. All rights reserved.<!-- sitemap.xml and robots.txt will be added at the Django project level. --></div>
   </footer>
 </body>
 

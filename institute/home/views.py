@@ -1,16 +1,46 @@
 from django.shortcuts import render
 
-home_context = {
-    'site_name': 'Compuetech',
-}
+
+about_text = '''
+Compuetech is an affordable computer training institute in Dhanubhanga, Goalpara, Assam, India, offering practical computer training courses designed to build job-ready skills. We provide computer courses in Software, Hardware, and Networking courses and other professional computer training programs.
+
+Since 2015, we have helped students and learners develop practical computer skills through high-quality, affordable computer education. Whether you are looking for a computer training institute near you, an ADCA course near you, or computer technician training, Compuetech provides hands-on learning designed to prepare you for real-world opportunities.
+
+With more than 10 years of experience in computer education, our goal is to make quality and affordable computer training accessible to everyone while empowering the digital future of our community.
+
+'''
+
+institute_ctxt = {
+        "site_name": "Compuetech",
+        "site_tagline": "Empowering digital future.",
+        "institute": {
+            "email": "compuetech@tuta.io",
+            "phone": "+91 700-261-6276",
+            "address": "Dhanubhanga, Goalpara, Assam, India",
+            "postal_address": "P.O. Dhanubhanga, Dist:Goalpara, PIN: 783130, India",
+        },
+        "institute_contact": {
+            "email": "info@abccomputerinstitute.com",
+            "phone": "+91 700-261-6276",
+            "whatsapp": "+91 700-261-6276",
+        },
+        "social_links": {
+        },
+        "seo": {
+            "default_description": "ABC Computer Training Institute provides practical computer training and career-focused digital skills courses.",
+            "default_keywords": "computer training, computer courses, IT training, digital skills, career courses",
+            
+        },
+        "about_content":about_text
+    }
 
 
 def home(request):
-    return render(request, "home.html", context=home_context)
+    return render(request, "home.html", context=institute_ctxt)
 
 
 def course_list(request):
-    return render(request, "courses/list.html")
+    return render(request, "courses/list.html", context=institute_ctxt)
 
 
 def course_detail(request, slug):
@@ -18,7 +48,7 @@ def course_detail(request, slug):
 
 
 def notice_board(request):
-    return render(request, "notices/board.html")
+    return render(request, "notices/board.html", context=institute_ctxt)
 
 
 def notice_detail(request, slug):
@@ -26,7 +56,7 @@ def notice_detail(request, slug):
 
 
 def blog_list(request):
-    return render(request, "blog/list.html")
+    return render(request, "blog/list.html", context=institute_ctxt)
 
 
 def blog_detail(request, slug):
@@ -34,7 +64,7 @@ def blog_detail(request, slug):
 
 
 def admission_form(request):
-    return render(request, "admission/form.html")
+    return render(request, "admission/form.html", context=institute_ctxt)
 
 
 def admission_success(request):
@@ -42,8 +72,8 @@ def admission_success(request):
 
 
 def about(request):
-    return render(request, "about.html", context=home_context)
+    return render(request, "about.html", context=institute_ctxt)
 
 
 def contact(request):
-    return render(request, "contact.html", context=home_context)
+    return render(request, "contact.html", context=institute_ctxt)

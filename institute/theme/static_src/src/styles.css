@@ -67,7 +67,7 @@
 
 .animated-background {
     background-size: 400%;
-
+    position: relative;
     -webkit-animation: animation 15s ease infinite;
     -moz-animation: animation 15s ease infinite;
     animation: animation 15s ease infinite;

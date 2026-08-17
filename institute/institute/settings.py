@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'tailwind',
     'theme',
     "home",
-
+    "institute"
 ]
 
 TAILWIND_APP_NAME = "theme"
@@ -93,12 +93,12 @@ tmpPostgres = urlparse(os.getenv("DATABASE_URL"))
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': tmpPostgres.path.replace('/', ''),
+        'NAME': tmpPostgres.path.replace('/', ''), #type: ignore
         'USER': tmpPostgres.username,
         'PASSWORD': tmpPostgres.password,
         'HOST': tmpPostgres.hostname,
         'PORT': 5432,
-        'OPTIONS': dict(parse_qsl(tmpPostgres.query)),
+        'OPTIONS': dict(parse_qsl(tmpPostgres.query)), #type: ignore
     }
 }
 

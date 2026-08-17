@@ -1,7 +1,58 @@
-{% extends 'base.html' %}{% block title %}About Us | {{ site_name }}{% endblock %}{% block meta_description %}Learn
+{% extends 'base.html' %}{% block title %}About Us | {{ site_name }}{% endblock %}
+{% load static %}
+{% block meta_description %}Learn
 about our mission, instructors, and approach to computer education.{% endblock %}{% block content %}
 <script type="application/ld+json">{{ breadcrumb_schema_json|safe }}</script>
-<section class="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
-    <h1 class="text-4xl font-black text-deep-space-blue-950">About {{ site_name }}</h1>
-    <div class="prose mt-8 max-w-none">{{ about_content|safe }}</div>
+
+<!-- Main About Section -->
+<section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+    <!-- Page Heading -->
+    <div class="mb-12">
+        <h1 class="text-4xl font-black text-deep-space-blue-950">About {{ site_name }}</h1>
+    </div>
+
+    <!-- About Content and Images Grid -->
+    <div class="grid grid-cols-1 gap-12 lg:grid-cols-3">
+        <!-- About Text Column -->
+        <div class="lg:col-span-1">
+            <div class="prose prose-sm max-w-none rounded-lg bg-gray-50 p-6 text-justify">
+                {{ about_content|safe }}
+            </div>
+        </div>
+
+        <!-- Images Grid Column -->
+        <div class="lg:col-span-2">
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2">
+                <!-- Image 1 -->
+                <div class="overflow-hidden rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
+                    <img 
+                        src="{% static 'images/about1.jpeg' %}" 
+                        alt="About our institute - Image 1"
+                        class="h-64 w-full object-cover"
+                        loading="lazy"
+                    >
+                </div>
+
+                <!-- Image 2 -->
+                <div class="overflow-hidden rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
+                    <img 
+                        src="{% static 'images/about2.jpeg' %}" 
+                        alt="About our institute - Image 2"
+                        class="h-64 w-full object-cover"
+                        loading="lazy"
+                    >
+                </div>
+
+                <!-- Image 3 -->
+                <div class="col-span-1 sm:col-span-2 lg:col-span-2 overflow-hidden rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
+                    <img 
+                        src="{% static 'images/about3.jpeg' %}" 
+                        alt="About our institute - Image 3"
+                        class="h-64 w-full object-cover"
+                        loading="lazy"
+                    >
+                </div>
+            </div>
+        </div>
+    </div>
 </section>{% endblock %}

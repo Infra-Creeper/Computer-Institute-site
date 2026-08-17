@@ -10,10 +10,12 @@ from django.utils.text import slugify
 
 
 class TimeStampedModel(models.Model):
-    """Abstract base model with creation and modification timestamps."""
-
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
+
 
     # Do not declare an inner Meta class here. Child models define their own
     # Meta classes, and this avoids Pylance's incompatible variable override

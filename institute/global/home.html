@@ -2,14 +2,14 @@
 courses and expert instructors.{% endblock %}{% block content %}
 {% load static %}
 <script type="application/ld+json">{{ organization_schema_json|safe }}</script>
-<section class="text-white w-screen animated-background h-screen bg-gradient-to-r from-deep-space-blue-600 via-jet-black-950 to-almond-cream-600">
+<section class="text-white w-full min-h-screen animated-background bg-gradient-to-r from-deep-space-blue-600 via-jet-black-950 to-almond-cream-600">
     <div class="mx-auto grid max-w-7xl gap-10 w-full px-4 py-20 sm:px-6 lg:grid-cols-3 lg:px-8 lg:py-28 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.7),rgba(0,0,0,0)),url('{% static 'images/hero.jpg' %}')] bg-cover bg-center ">
         <div>
             <p class="font-semibold uppercase tracking-widest text-almond-cream-300">Learn. Practice. Progress.</p>
             <h1 class="mt-4 text-4xl font-black tracking-tight sm:text-6xl">Skills that move your career forward.</h1>
-            <p class="mt-6 max-w-xl text-lg text-steel-blue-100">{{ hero_text|default:'Gain job-ready computer skills through practical lessons, supportive mentors, and flexible learning paths.' }}</p><a href="/courses/"
-                class="mt-8 inline-block rounded-xl bg-sandy-brown-500 px-6 py-3 font-bold hover:bg-sandy-brown-600">Explore
-                courses</a>
+            <p class="mt-6 max-w-xl text-lg text-steel-blue-100">{{ hero_text|default:'Gain job-ready computer skills through practical lessons, supportive mentors, and flexible learning paths.' }}</p>
+            <a href="/courses/"class="mt-8 inline-block rounded-xl bg-sandy-brown-500 px-6 py-3 font-bold hover:bg-sandy-brown-600">Explore courses</a>
+            <a href="/about/"class="mt-8 inline-block rounded-xl bg-sandy-brown-500 px-6 py-3 font-bold hover:bg-sandy-brown-600">About Us</a> <br>
         </div>
         
         <div></div>
@@ -45,7 +45,7 @@ courses and expert instructors.{% endblock %}{% block content %}
         </div>
     </div>
 </section>
-<section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+<section class="mx-auto max-w-7xl px-4 py-16 sm:my-6 sm:px-6 lg:px-8">
     <h2 class="text-3xl font-bold text-deep-space-blue-950">Why choose us</h2>
     <div class="mt-8 grid gap-6 md:grid-cols-3">{% for item in benefits %}<article
             class="rounded-2xl bg-white p-6 ring-1 ring-steel-blue-100">
