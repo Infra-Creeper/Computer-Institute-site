@@ -1,3 +1,6 @@
+import csv
+from pathlib import Path
+
 from django.shortcuts import render
 
 
@@ -40,7 +43,24 @@ def home(request):
 
 
 def course_list(request):
-    return render(request, "courses/list.html", context=institute_ctxt)
+    course_file = Path(__file__).resolve().parent / "Computer_Institute_Course_Fee_Master.csv"
+    with course_file.open(newline="", encoding="cp1252") as csv_file:
+        courses = [
+            {
+                "course_code": row["Course Code"],
+                "course_name": row["Course Name"],
+                "duration": row["Duration"],
+                "eligibility": row["Eligibility"],
+                "admission_fees": row["Admission Fees"],
+                "monthly_fees": row["Monthly Fees"],
+                "exam_fees": row["Exam Fees"],
+                "total_fees": row["Total Fees"],
+            }
+            for row in csv.DictReader(csv_file)
+        ]
+
+    context = {**institute_ctxt, "courses": courses}
+    return render(request, "courses/list.html", context=context)
 
 
 def course_detail(request, slug):
