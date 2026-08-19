@@ -1,6 +1,7 @@
 import csv
 from pathlib import Path
 
+from django.http import HttpResponse
 from django.utils.timezone import localdate
 from django.shortcuts import get_object_or_404, render
 
@@ -124,5 +125,32 @@ def about(request):
 def contact(request):
     return render(request, "contact.html", context=institute_ctxt)
 
+
 def robots(request):
-    return render(request,"robots.txt")
+    response = render(request, "robots.txt")
+    response.headers["Content-Type"] = "text/plain; charset=utf-8"
+    return response
+
+
+def sitemap(request):
+    urls = [
+        ("/", "1.0"),
+        ("/courses/", "0.9"),
+        ("/admission/", "0.8"),
+        ("/courses/list", "0.7"),
+        ("/notices/", "0.5"),
+        ("/blog/", "0.5"),
+        ("/about/", "0.5"),
+        ("/contact/", "0.5"),
+    ]
+    xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+    xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+    xml += "".join(
+        "  <url>\n"
+        f"    <loc>{request.build_absolute_uri(path)}</loc>\n"
+        f"    <priority>{priority}</priority>\n"
+        "  </url>\n"
+        for path, priority in urls
+    )
+    xml += "</urlset>\n"
+    return HttpResponse(xml, content_type="application/xml")
