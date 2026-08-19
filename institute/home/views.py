@@ -123,3 +123,6 @@ def about(request):
 
 def contact(request):
     return render(request, "contact.html", context=institute_ctxt)
+
+def robots(request):
+    return render(request,"robots.txt")
