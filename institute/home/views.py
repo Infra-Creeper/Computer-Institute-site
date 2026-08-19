@@ -2,7 +2,7 @@ import csv
 from pathlib import Path
 
 from django.utils.timezone import localdate
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 
 from .models import Notice
 
@@ -78,7 +78,7 @@ def notice_board(request):
             "date": notice.published_at,
             "content": notice.message,
             "excerpt": notice.message,
-            "slug": str(notice.number),
+            "slug": notice.slug,
             "is_recent": notice.published_at.date() == localdate(),
         }
         for notice in notices
@@ -92,7 +92,12 @@ def notice_board(request):
 
 
 def notice_detail(request, slug):
-    return render(request, "notices/detail.html", {"slug": slug})
+    notice = get_object_or_404(Notice, slug=slug)
+    return render(request, "notices/detail.html", {"notice": {
+        "title": notice.title,
+        "date": notice.published_at,
+        "content": notice.message,
+    }})
 
 
 def blog_list(request):

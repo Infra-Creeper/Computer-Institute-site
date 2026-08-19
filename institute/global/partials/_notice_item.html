@@ -1,1 +1,10 @@
-<article class="border-b border-steel-blue-100 py-5 last:border-0"><div class="flex flex-wrap items-center gap-2"><time datetime="{{ notice.date|date:'c' }}" class="text-sm text-jet-black-500">{{ notice.date|date:'d M Y' }}</time>{% if notice.is_recent %}<span class="rounded-full bg-sandy-brown-100 px-2 py-0.5 text-xs font-semibold text-sandy-brown-800">New</span>{% endif %}</div><h3 class="mt-1 text-lg font-semibold text-deep-space-blue-900"><a href="/notices/{{ notice.slug }}/" hx-get="/notices/{{ notice.slug }}/" hx-target="#modal" hx-swap="innerHTML" class="hover:text-sandy-brown-600">{{ notice.title }}</a></h3><p class="mt-1 text-sm text-jet-black-600">{{ notice.excerpt|default:notice.content|truncatewords:30 }}</p>{% if notice.attachment_url %}<a href="{{ notice.attachment_url }}" download class="mt-2 inline-block text-sm font-semibold text-deep-space-blue-700 hover:underline">Download attachment</a>{% endif %}</article>
+<article class="border-b border-steel-blue-100 py-5 last:border-0">
+    <div class="flex flex-wrap items-center gap-2"><time datetime="{{ notice.date|date:'c' }}"
+            class="text-sm text-jet-black-500">{{ notice.date|date:'d M Y' }}</time>{% if notice.is_recent %}<span
+            class="rounded-full bg-sandy-brown-100 px-2 py-0.5 text-xs font-semibold text-sandy-brown-800">New</span>{%endif %}</div>
+    <h3 class="mt-1 text-lg font-semibold text-deep-space-blue-900"><a href="{% url 'home:notice-detail' notice.slug %}"
+            class="hover:text-sandy-brown-600">{{ notice.title }}</a></h3>
+    <p class="mt-1 text-sm text-jet-black-600">{{ notice.excerpt|default:notice.content|truncatewords:30 }}</p>{% if notice.attachment_url %}<a href="{{ notice.attachment_url }}" download
+        class="mt-2 inline-block text-sm font-semibold text-deep-space-blue-700 hover:underline">Download
+        attachment</a>{% endif %}
+</article>

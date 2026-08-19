@@ -15,7 +15,7 @@ def _notice_context(notice):
 		"date": notice.published_at,
 		"content": notice.message,
 		"excerpt": notice.message,
-		"slug": str(notice.number),
+		"slug": notice.slug,
 		"is_recent": notice.published_at.date() == date.today(),
 	}
 

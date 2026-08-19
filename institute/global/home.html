@@ -20,10 +20,10 @@ courses and expert instructors.{% endblock %}{% block content %}
                 for your goals.</p>
             <div class="mt-8 grid grid-cols-2 gap-4 text-center">
                 <div class="rounded-xl bg-deep-space-blue-900 p-4"><strong
-                        class="block text-3xl text-almond-cream-300">{{ stats.learners|default:'2k+' }}</strong><span
+                        class="block text-3xl text-almond-cream-300">{{ stats.learners|default:'1k+' }}</strong><span
                         class="text-sm">Learners</span></div>
                 <div class="rounded-xl bg-deep-space-blue-900 p-4"><strong
-                        class="block text-3xl text-almond-cream-300">{{ stats.courses|default:'20+' }}</strong><span
+                        class="block text-3xl text-almond-cream-300">{{ stats.courses|default:'30+' }}</strong><span
                         class="text-sm">Courses</span></div>
                 <div class="col-span-2 rounded-xl bg-deep-space-blue-900 p-4">
                     <div class="flex items-center gap-4">
@@ -76,9 +76,6 @@ courses and expert instructors.{% endblock %}{% block content %}
             </div><a href="/courses/" class="font-semibold text-deep-space-blue-700">View all</a>
         </div>
         {% include 'courses/_popular_tabs.html'%}
-        <div id="featured-courses" class="mt-8 grid gap-6 md:grid-cols-3" hx-get="/api/courses/featured/"
-            hx-trigger="load" hx-swap="innerHTML" hx-indicator="#featured-courses-spinner"><span
-                id="featured-courses-spinner" class="htmx-indicator col-span-full text-sm">Loading courses…</span></div>
     </div>
 </section>
 <section class="bg-steel-blue-800 flex">
@@ -95,10 +92,8 @@ courses and expert instructors.{% endblock %}{% block content %}
         <div class="mt-4" hx-get="/api/notices/latest/" hx-trigger="load" hx-swap="innerHTML"><span
                 class="text-sm">Loading notices…</span></div>
     </div>
-    <div>
-        <h2 class="text-2xl font-bold">From the blog</h2>
-        <div class="mt-4 grid gap-4" hx-get="/api/blog/latest/" hx-trigger="load" hx-swap="innerHTML"><span
-                class="text-sm">Loading posts…</span></div>
+    <div class="items-center">
+        <a href="/notices/" class="rounded-xl justify-end text-white bg-jet-black-950 px-6 py-3 font-bold hover:bg-jet-black-800">See all notices</a>
     </div>
 </section>
 <section class="bg-sandy-brown-500">

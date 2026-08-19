@@ -1,6 +1,7 @@
 import uuid
 from django.db import models
 from django.core.validators import RegexValidator
+from django.utils.text import slugify
 
 
 class Admission(models.Model):
@@ -81,6 +82,7 @@ class Notice(models.Model):
         help_text="Auto-incrementing notice number."
     )
     title = models.CharField(max_length=200)
+    slug = models.SlugField(max_length=220, unique=True, editable=False, db_index=False)
     message = models.TextField()
 
     published_at = models.DateTimeField(auto_now_add=True)
@@ -92,6 +94,8 @@ class Notice(models.Model):
         if not self.number:
             last = Notice.objects.order_by('-number').first()
             self.number = (last.number + 1) if last else 1
+        if not self.slug:
+            self.slug = f"{slugify(self.title)}-{self.number}"
         super().save(*args, **kwargs)
 
     def __str__(self):
