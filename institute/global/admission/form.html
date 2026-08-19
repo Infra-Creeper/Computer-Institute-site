@@ -15,9 +15,7 @@
         <span class="mb-1 block text-sm font-semibold">Course Name *</span>
         <select name="course_name" required class="border text-lg w-full rounded-lg border-steel-blue-400 px-4 py-3">
           <option value="">Select a course</option>
-          {% for course in courses %}
-            <option value="{{ course.slug }}" {% if request.GET.course == course.slug %}selected{% endif %}>{{ course.title }}</option>
-          {% endfor %}
+          {% include 'admission/course_options.html' %}
         </select>
       </label>
 

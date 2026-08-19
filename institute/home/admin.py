@@ -43,7 +43,7 @@ class ContactAdmin(admin.ModelAdmin):
 
     def short_message(self, obj):
         return (obj.message[:60] + '…') if len(obj.message) > 60 else obj.message
-    short_message.short_description = 'Message'
+    short_message.short_description = 'Message' #type: ignore
 
     @admin.action(description="Mark selected messages as read")
     def mark_as_read(self, request, queryset):
