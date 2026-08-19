@@ -5,8 +5,8 @@ app_name = "home"
 
 urlpatterns = [
     path("", views.home, name="home"),
-    path("courses/", views.course_list, name="course-list"),
-    path("courses/<slug:slug>/", views.course_detail, name="course-detail"),
+    path("courses/", views.courses, name="course-details"),
+    path("courses/list", views.course_list, name="course-list"),
     path("notices/", views.notice_board, name="notice-board"),
     path("notices/<slug:slug>/", views.notice_detail, name="notice-detail"),
     path("blog/", views.blog_list, name="blog-list"),

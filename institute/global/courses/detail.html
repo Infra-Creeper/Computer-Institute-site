@@ -1,39 +1,785 @@
-{% extends 'base.html' %}{% block title %}{{ course.title }} | {{ site_name }}{% endblock %}{% block meta_description
-%}{{ course.excerpt|default:course.description|truncatewords:25 }}{% endblock %}{% block extra_head %}
-<script type="application/ld+json">{{ course_schema_json|safe }}</script>{% endblock %}{% block content %}
-<script type="application/ld+json">{{ breadcrumb_schema_json|safe }}</script>
-<article class="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
-    <p class="font-semibold text-sandy-brown-600">{{ course.category.name|default:course.category }}</p>
-    <h1 class="text-4xl font-black text-deep-space-blue-950">{{ course.title }}</h1>
-    <div class="mt-8 grid gap-10 lg:grid-cols-3">
-        <div class="lg:col-span-2"><img src="{{ course.image_url }}" alt="{{ course.image_alt|default:course.title }}"
-                loading="lazy" class="h-64 w-full rounded-2xl object-cover">
-            <div class="prose mt-8 max-w-none">{{ course.description|safe }}</div>
-            <h2 class="mt-10 text-2xl font-bold">Syllabus</h2>
-            <div class="mt-4 space-y-3">{% for module in course.syllabus %}<details
-                    class="rounded-xl bg-white p-4 ring-1 ring-steel-blue-100">
-                    <summary class="cursor-pointer font-semibold">{{ module.title }}</summary>
-                    <p class="mt-2 text-sm text-jet-black-600">{{ module.description }}</p>
-                </details>{% endfor %}</div>
+{% extends "base.html" %}
+{% load static %}
+
+{% comment %}
+  All Courses page , Computer Software & Hardware
+  Template: templates/courses/all_courses.html
+
+  Django formatter notes:
+  - {% extends "base.html" %} pulls in the shared navbar, footer and <head> shell.
+  - The base template should already include the Tailwind CDN/compiled CSS and the
+    custom color config (steel-blue, jet-black, sandy-brown, almond-cream, deep-space-blue).
+  - Everything between {% block content %} and {% endblock %} is the original page
+    content, kept as-is.
+  - The JSON-LD schema block is kept inside {% block content %} so it renders on the page.
+  - The standalone <html>, <head>, <body> and closing tags were removed because
+    base.html provides them.
+{% endcomment %}
+
+{% block title %}All Courses , Computer Software &amp; Hardware , Compuetech Computer Training Institute{% endblock %}
+
+{% block meta_description %}Explore all computer courses at Compuetech Computer Training Institute, Goalpara, Assam , software diplomas (PG-DCA, ADCA, DCA, DWD, DCFA) and hardware &amp; networking programs (ADCH, DCH, DCN, CCHP) with lab practicals and project/viva.{% endblock %}
+
+{% block extra_head %}
+<style>
+  span[class~="font-semibold"][class~="rounded-full"] {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Computer Software &amp; Hardware Courses",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Computer Software Courses" },
+    { "@type": "ListItem", "position": 2, "name": "Computer Hardware & Networking Courses" }
+  ]
+}
+</script>
+{% endblock %}
+
+{% block content %}
+
+  <main id="main-content">
+
+    <!-- Page Header -->
+        <!-- Page Header -->
+    <section class="bg-gradient-to-r from-steel-blue-700 via-steel-blue-800 to-deep-space-blue-800 py-12 lg:py-16" aria-labelledby="courses-page-title">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <p class="text-sm font-semibold text-steel-blue-200 uppercase tracking-wider mb-2">Compuetech Computer Training Institute</p>
+        <h1 id="courses-page-title" class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">Our Courses</h1>
+        <p class="text-lg text-steel-blue-100 max-w-3xl">Comprehensive computer software and hardware &amp; networking programs , from post-graduate diplomas to short-term certificates , with hands-on lab practicals and project/viva evaluation.</p>
+        <nav aria-label="Jump to section" class="mt-6 flex flex-wrap gap-3">
+          <a href="/courses/list" class="inline-flex items-center px-5 py-2.5 text-sm font-semibold rounded-lg text-white bg-sandy-brown-500 hover:bg-sandy-brown-400 transition-colors focus:outline-none focus:ring-2 focus:ring-sandy-brown-500">View fee structure of our courses</a> <br>
+          <a href="#sw-section-anchor" class="inline-flex items-center px-5 py-2.5 text-sm font-semibold rounded-lg text-steel-blue-700 bg-almond-cream-100 hover:bg-almond-cream-200 transition-colors focus:outline-none focus:ring-2 focus:ring-almond-cream-300">Software Courses</a>
+          <a href="#hardware-section" class="inline-flex items-center px-5 py-2.5 text-sm font-semibold rounded-lg text-steel-blue-700 bg-almond-cream-100 hover:bg-almond-cream-200 transition-colors focus:outline-none focus:ring-2 focus:ring-almond-cream-300">Hardware &amp; Networking</a>
+        </nav>
+      </div>
+    </section>
+
+    <!-- One-Year Diploma Programs -->
+    
+    <!-- SOFTWARE COURSES -->
+    <div id="software-section" class="scroll-mt-20">
+<section class="py-12 lg:py-16" aria-labelledby="sw-diplomas-title">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 id="sw-diplomas-title" class="text-2xl sm:text-3xl font-bold text-jet-black-900 mb-2">Diploma Programs (1 Year)</h2>
+        <p class="text-jet-black-700 mb-10">Comprehensive one-year diplomas covering programming, applications, accounting and publishing.</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+
+          <!-- PG-DCA -->
+          <article class="bg-white rounded-xl border border-steel-blue-200 shadow-sm overflow-hidden" itemscope itemtype="https://schema.org/Course">
+            <div class="bg-gradient-to-r from-steel-blue-600 to-deep-space-blue-700 px-6 py-4 flex items-center justify-between">
+              <h3 class="text-lg font-bold text-white" itemprop="name">PG-Diploma in Computer Application (PG-DCA)</h3>
+              <span class="px-3 py-1 text-xs font-semibold rounded-full bg-sandy-brown-500 text-white">1 Year</span>
+            </div>
+            <div class="p-6">
+              <div class="flex flex-wrap gap-2 mb-4">
+                <span class="px-2.5 py-1 text-xs font-medium bg-sandy-brown-100 text-sandy-brown-800 rounded-full">Eligibility: Graduate</span>
+              </div>
+              <p class="text-xs font-semibold text-steel-blue-600 uppercase tracking-wide mb-2">Part I (6 Months)</p>
+              <ul class="space-y-2 text-sm text-jet-black-700 mb-4" itemprop="description">
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Fundamentals of Computer, Windows (OS)</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>MS-Office (Word, Excel, PowerPoint), Access</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Computer Lab Practical &amp; Project/Viva</span></li>
+              </ul>
+              <p class="text-xs font-semibold text-steel-blue-600 uppercase tracking-wide mb-2">Part II (6 Months)</p>
+              <ul class="space-y-2 text-sm text-jet-black-700">
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>C &amp; C++, Visual Basic or Java Programming</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>HTML, DHTML, JavaScript, Internet</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Computer Lab Practical &amp; Project/Viva</span></li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- ADCA -->
+          <article class="bg-white rounded-xl border border-steel-blue-200 shadow-sm overflow-hidden" itemscope itemtype="https://schema.org/Course">
+            <div class="bg-gradient-to-r from-steel-blue-600 to-deep-space-blue-700 px-6 py-4 flex items-center justify-between">
+              <h3 class="text-lg font-bold text-white" itemprop="name">Advance Diploma in Computer Application (ADCA)</h3>
+              <span class="px-3 py-1 text-xs font-semibold rounded-full bg-sandy-brown-500 text-white">1 Year</span>
+            </div>
+            <div class="p-6">
+              <div class="flex flex-wrap gap-2 mb-4">
+                <span class="px-2.5 py-1 text-xs font-medium bg-steel-blue-100 text-steel-blue-800 rounded-full">Eligibility: Min 10th</span>
+              </div>
+              <ul class="space-y-2.5 text-sm text-jet-black-700" itemprop="description">
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Fundamentals of Computer, Windows (OS)</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>MS-Word, Excel, PowerPoint, Access, HTML, DHTML</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>C Programming, Tally, Internet</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Computer Lab Practical &amp; Project/Viva</span></li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- D.C.I.T.S -->
+          <article class="bg-white rounded-xl border border-steel-blue-200 shadow-sm overflow-hidden" itemscope itemtype="https://schema.org/Course">
+            <div class="bg-gradient-to-r from-steel-blue-600 to-deep-space-blue-700 px-6 py-4 flex items-center justify-between">
+              <h3 class="text-lg font-bold text-white" itemprop="name">Diploma in Computer Instructor Training Skills (D.C.I.T.S)</h3>
+              <span class="px-3 py-1 text-xs font-semibold rounded-full bg-sandy-brown-500 text-white">1 Year</span>
+            </div>
+            <div class="p-6">
+              <div class="flex flex-wrap gap-2 mb-4">
+                <span class="px-2.5 py-1 text-xs font-medium bg-steel-blue-100 text-steel-blue-800 rounded-full">Eligibility: Min +2</span>
+                <span class="px-2.5 py-1 text-xs font-medium bg-deep-space-blue-100 text-deep-space-blue-800 rounded-full">Instructor Training</span>
+              </div>
+              <ul class="space-y-2.5 text-sm text-jet-black-700" itemprop="description">
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Fundamentals of Computer, Windows, MS Office, MS Access</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Tally or Visual Basic, HTML, DHTML</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Programming concepts in C &amp; C++, Oracle or Java</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Corel Draw, Page Maker, Internet; computer lab practical</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>On-site practical teaching + Viva</span></li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- HDCS -->
+          <article class="bg-white rounded-xl border border-steel-blue-200 shadow-sm overflow-hidden" itemscope itemtype="https://schema.org/Course">
+            <div class="bg-gradient-to-r from-steel-blue-600 to-deep-space-blue-700 px-6 py-4 flex items-center justify-between">
+              <h3 class="text-lg font-bold text-white" itemprop="name">Honour Diploma in Computer Skills (HDCS)</h3>
+              <span class="px-3 py-1 text-xs font-semibold rounded-full bg-sandy-brown-500 text-white">1 Year</span>
+            </div>
+            <div class="p-6">
+              <div class="flex flex-wrap gap-2 mb-4">
+                <span class="px-2.5 py-1 text-xs font-medium bg-steel-blue-100 text-steel-blue-800 rounded-full">Eligibility: Min 12th</span>
+              </div>
+              <ul class="space-y-2.5 text-sm text-jet-black-700" itemprop="description">
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Fundamentals of Computer, Windows (OS)</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>MS-Office (Word, Excel, PowerPoint), C &amp; C++</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>HTML, DHTML, Tally, Internet</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Computer Lab Practical &amp; Project/Viva</span></li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- ADCP -->
+          <article class="bg-white rounded-xl border border-steel-blue-200 shadow-sm overflow-hidden" itemscope itemtype="https://schema.org/Course">
+            <div class="bg-gradient-to-r from-steel-blue-600 to-deep-space-blue-700 px-6 py-4 flex items-center justify-between">
+              <h3 class="text-lg font-bold text-white" itemprop="name">Advance Diploma in Computer Programming (ADCP)</h3>
+              <span class="px-3 py-1 text-xs font-semibold rounded-full bg-sandy-brown-500 text-white">1 Year</span>
+            </div>
+            <div class="p-6">
+              <div class="flex flex-wrap gap-2 mb-4">
+                <span class="px-2.5 py-1 text-xs font-medium bg-steel-blue-100 text-steel-blue-800 rounded-full">Eligibility: Min 12th</span>
+                <span class="px-2.5 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full">Programming</span>
+              </div>
+              <ul class="space-y-2.5 text-sm text-jet-black-700" itemprop="description">
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Fundamentals of Computer, Windows (OS)</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>MS-Office (Word, Excel, PowerPoint), C &amp; C++</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>HTML/DHTML/JavaScript, VB, Oracle or Java, Internet</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Computer Lab Practical &amp; Project/Viva</span></li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- DCOMP -->
+          <article class="bg-white rounded-xl border border-steel-blue-200 shadow-sm overflow-hidden" itemscope itemtype="https://schema.org/Course">
+            <div class="bg-gradient-to-r from-steel-blue-600 to-deep-space-blue-700 px-6 py-4 flex items-center justify-between">
+              <h3 class="text-lg font-bold text-white" itemprop="name">Diploma in Computer Office Management &amp; Publishing (DCOMP)</h3>
+              <span class="px-3 py-1 text-xs font-semibold rounded-full bg-sandy-brown-500 text-white">1 Year</span>
+            </div>
+            <div class="p-6">
+              <div class="flex flex-wrap gap-2 mb-4">
+                <span class="px-2.5 py-1 text-xs font-medium bg-steel-blue-100 text-steel-blue-800 rounded-full">Eligibility: 12th</span>
+                <span class="px-2.5 py-1 text-xs font-medium bg-almond-cream-100 text-almond-cream-800 rounded-full">DTP + Accounting</span>
+              </div>
+              <ul class="space-y-2.5 text-sm text-jet-black-700" itemprop="description">
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Fundamentals of Computer, OS (Windows)</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>MS-Office, Internet, Financial Accounting , Tally</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>DTP , Page Maker, Corel Draw, Photoshop, Scanning</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Computer Lab Practical &amp; Project/Viva</span></li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- DCOSA -->
+          <article class="bg-white rounded-xl border border-steel-blue-200 shadow-sm overflow-hidden lg:col-span-2" itemscope itemtype="https://schema.org/Course">
+            <div class="bg-gradient-to-r from-steel-blue-600 to-deep-space-blue-700 px-6 py-4 flex items-center justify-between">
+              <h3 class="text-lg font-bold text-white" itemprop="name">Diploma in Computer Office Skills &amp; Accounting (DCOSA / ADCFA)</h3>
+              <span class="px-3 py-1 text-xs font-semibold rounded-full bg-sandy-brown-500 text-white">1 Year</span>
+            </div>
+            <div class="p-6 lg:flex lg:gap-8">
+              <div class="lg:flex-1">
+                <div class="flex flex-wrap gap-2 mb-4">
+                  <span class="px-2.5 py-1 text-xs font-medium bg-steel-blue-100 text-steel-blue-800 rounded-full">Eligibility: Min 10th</span>
+                </div>
+                <ul class="space-y-2.5 text-sm text-jet-black-700" itemprop="description">
+                  <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Fundamentals of Computers, Windows (OS)</span></li>
+                  <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>MS Office (Word, Excel, PowerPoint) &amp; Internet</span></li>
+                  <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Financial Accounting , Tally (company creation, accounting, reports, etc.)</span></li>
+                  <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Computer Lab Practical &amp; Project/Viva</span></li>
+                </ul>
+              </div>
+              <div class="hidden lg:block w-px bg-steel-blue-200"></div>
+              <div class="hidden lg:block lg:flex-1 pl-8 text-sm text-jet-black-600">
+                <p class="font-semibold text-jet-black-800 mb-2">Why this course?</p>
+                <p>Combines office productivity skills with professional accounting in Tally, preparing you for roles in office administration and accounts management.</p>
+              </div>
+            </div>
+          </article>
+
         </div>
-        <aside class="h-fit rounded-2xl bg-deep-space-blue-950 p-6 text-white">
-            <h2 class="text-xl font-bold">Course details</h2>
-            <dl class="mt-5 space-y-4 text-sm">
-                <div>
-                    <dt class="text-steel-blue-200">Duration</dt>
-                    <dd class="font-semibold">{{ course.duration }}</dd>
-                </div>
-                <div>
-                    <dt class="text-steel-blue-200">Fee</dt>
-                    <dd class="font-semibold">{{ course.fee_display|default:course.fee }}</dd>
-                </div>
-                <div>
-                    <dt class="text-steel-blue-200">Batch</dt>
-                    <dd class="font-semibold">{{ course.batch_info }}</dd>
-                </div>
-            </dl><a href="/admission/?course={{ course.slug }}"
-                class="mt-8 block rounded-xl bg-sandy-brown-500 px-5 py-3 text-center font-bold hover:bg-sandy-brown-600">Apply
-                now</a>
-        </aside>
+      </div>
+    </section><section class="py-12 lg:py-16 bg-almond-cream-50" aria-labelledby="sw-short-diplomas-title">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 id="sw-short-diplomas-title" class="text-2xl sm:text-3xl font-bold text-jet-black-900 mb-2">Six-Month Diplomas &amp; Certificates</h2>
+        <p class="text-jet-black-700 mb-10">Shorter programs focused on specific skills , accounting, publishing, web design and core applications.</p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+          <!-- ACCA -->
+          <article class="bg-white rounded-xl border border-steel-blue-200 shadow-sm overflow-hidden" itemscope itemtype="https://schema.org/Course">
+            <div class="bg-gradient-to-r from-almond-cream-500 to-sandy-brown-600 px-5 py-3.5 flex items-center justify-between">
+              <h3 class="text-base font-bold text-white" itemprop="name">Advance Certificate in Computer Application (ACCA)</h3>
+              <span class="px-3 py-1 text-xs font-semibold rounded-full bg-white/20 text-white">1 Year</span>
+            </div>
+            <div class="p-5">
+              <ul class="space-y-2 text-sm text-jet-black-700" itemprop="description">
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Fundamentals of Computer, Windows (OS)</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>MS-Office, MS Access</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>HTML, C Language or Tally, Internet</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Computer Lab Practical &amp; Project/Viva</span></li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- DCFA -->
+          <article class="bg-white rounded-xl border border-steel-blue-200 shadow-sm overflow-hidden" itemscope itemtype="https://schema.org/Course">
+            <div class="bg-gradient-to-r from-almond-cream-500 to-sandy-brown-600 px-5 py-3.5 flex items-center justify-between">
+              <h3 class="text-base font-bold text-white" itemprop="name">Diploma in Computer Financial Accounting (DCFA)</h3>
+              <span class="px-3 py-1 text-xs font-semibold rounded-full bg-white/20 text-white">6 Months</span>
+            </div>
+            <div class="p-5">
+              <div class="flex flex-wrap gap-2 mb-3">
+                <span class="px-2.5 py-1 text-xs font-medium bg-steel-blue-100 text-steel-blue-800 rounded-full">Eligibility: Min 10th</span>
+              </div>
+              <ul class="space-y-2 text-sm text-jet-black-700" itemprop="description">
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Fundamentals of Computer, Windows, MS-Office</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>MS Access, Financial Accounting , Tally</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Computer Lab Practical, Project/Viva</span></li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- DDTP -->
+          <article class="bg-white rounded-xl border border-steel-blue-200 shadow-sm overflow-hidden" itemscope itemtype="https://schema.org/Course">
+            <div class="bg-gradient-to-r from-almond-cream-500 to-sandy-brown-600 px-5 py-3.5 flex items-center justify-between">
+              <h3 class="text-base font-bold text-white" itemprop="name">Diploma in DeskTop Publishing (DDTP)</h3>
+              <span class="px-3 py-1 text-xs font-semibold rounded-full bg-white/20 text-white">6 Months</span>
+            </div>
+            <div class="p-5">
+              <div class="flex flex-wrap gap-2 mb-3">
+                <span class="px-2.5 py-1 text-xs font-medium bg-steel-blue-100 text-steel-blue-800 rounded-full">Eligibility: 10th</span>
+              </div>
+              <ul class="space-y-2 text-sm text-jet-black-700" itemprop="description">
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Fundamentals of Computer, Windows (OS)</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>PageMaker, CorelDraw, Photoshop, Scanning, Printing</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Computer Lab Practical, Project/Viva</span></li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- DWD -->
+          <article class="bg-white rounded-xl border border-steel-blue-200 shadow-sm overflow-hidden" itemscope itemtype="https://schema.org/Course">
+            <div class="bg-gradient-to-r from-almond-cream-500 to-sandy-brown-600 px-5 py-3.5 flex items-center justify-between">
+              <h3 class="text-base font-bold text-white" itemprop="name">Diploma in Web Designing (DWD)</h3>
+              <span class="px-3 py-1 text-xs font-semibold rounded-full bg-white/20 text-white">6 Months</span>
+            </div>
+            <div class="p-5">
+              <div class="flex flex-wrap gap-2 mb-3">
+                <span class="px-2.5 py-1 text-xs font-medium bg-steel-blue-100 text-steel-blue-800 rounded-full">Eligibility: 10th</span>
+              </div>
+              <ul class="space-y-2 text-sm text-jet-black-700" itemprop="description">
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Fundamentals of Computer, Windows, basics of DTP</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>HTML, DHTML, JavaScript or Flash &amp; Internet</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Computer Lab Practical, Project/Viva</span></li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- DCA -->
+          <article class="bg-white rounded-xl border border-steel-blue-200 shadow-sm overflow-hidden" itemscope itemtype="https://schema.org/Course">
+            <div class="bg-gradient-to-r from-almond-cream-500 to-sandy-brown-600 px-5 py-3.5 flex items-center justify-between">
+              <h3 class="text-base font-bold text-white" itemprop="name">Diploma in Computer Application (DCA)</h3>
+              <span class="px-3 py-1 text-xs font-semibold rounded-full bg-white/20 text-white">6 Months</span>
+            </div>
+            <div class="p-5">
+              <div class="flex flex-wrap gap-2 mb-3">
+                <span class="px-2.5 py-1 text-xs font-medium bg-steel-blue-100 text-steel-blue-800 rounded-full">Eligibility: Min 10th</span>
+              </div>
+              <ul class="space-y-2 text-sm text-jet-black-700" itemprop="description">
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Fundamentals of Computer, Windows (OS)</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>MS-Office, MS Access, Tally or C Language or Internet</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Computer Lab Practical, Project/Viva</span></li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- CCA -->
+          <article class="bg-white rounded-xl border border-steel-blue-200 shadow-sm overflow-hidden" itemscope itemtype="https://schema.org/Course">
+            <div class="bg-gradient-to-r from-almond-cream-500 to-sandy-brown-600 px-5 py-3.5 flex items-center justify-between">
+              <h3 class="text-base font-bold text-white" itemprop="name">Certificate in Computer Application (CCA)</h3>
+              <span class="px-3 py-1 text-xs font-semibold rounded-full bg-white/20 text-white">6 Months</span>
+            </div>
+            <div class="p-5">
+              <ul class="space-y-2 text-sm text-jet-black-700" itemprop="description">
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Fundamentals of Computer, Windows, MS-Office, MS Access</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>C Language or Tally or Internet</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Computer Lab Practical &amp; Project/Viva</span></li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- CBC -->
+          <article class="bg-white rounded-xl border border-steel-blue-200 shadow-sm overflow-hidden" itemscope itemtype="https://schema.org/Course">
+            <div class="bg-gradient-to-r from-almond-cream-500 to-sandy-brown-600 px-5 py-3.5 flex items-center justify-between">
+              <h3 class="text-base font-bold text-white" itemprop="name">Certificate in Basic Computer (CBC)</h3>
+              <span class="px-3 py-1 text-xs font-semibold rounded-full bg-white/20 text-white">3 Months</span>
+            </div>
+            <div class="p-5">
+              <ul class="space-y-2 text-sm text-jet-black-700" itemprop="description">
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Fundamentals of Computer, Windows (OS)</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>MS-Office (Word, Excel, PowerPoint)</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Computer Lab Practical &amp; Project/Viva</span></li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- CCFA -->
+          <article class="bg-white rounded-xl border border-steel-blue-200 shadow-sm overflow-hidden" itemscope itemtype="https://schema.org/Course">
+            <div class="bg-gradient-to-r from-almond-cream-500 to-sandy-brown-600 px-5 py-3.5 flex items-center justify-between">
+              <h3 class="text-base font-bold text-white" itemprop="name">Certificate in Computer Financial Accounting (CCFA)</h3>
+              <span class="px-3 py-1 text-xs font-semibold rounded-full bg-white/20 text-white">3 Months</span>
+            </div>
+            <div class="p-5">
+              <ul class="space-y-2 text-sm text-jet-black-700" itemprop="description">
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Fundamentals of Computer, Windows (OS)</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Basics of Financial Accounting , Tally</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Computer Lab Practical &amp; Project/Viva</span></li>
+              </ul>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section><section class="py-12 lg:py-16" aria-labelledby="sw-short-term-title">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 id="sw-short-term-title" class="text-2xl sm:text-3xl font-bold text-jet-black-900 mb-2">Short-Term Certificates</h2>
+        <p class="text-jet-black-700 mb-10">Quick, skill-focused certificates in typing, internet, DTP, Tally and programming.</p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="flex flex-col gap-1 bg-white border border-steel-blue-200 rounded-lg p-4 shadow-sm">
+            <span class="text-sm font-semibold text-jet-black-800">Certificate in Computer English Typing</span>
+            <span class="text-xs text-steel-blue-600 font-medium">1 / 2 / 3 / 6 Months</span>
+          </div>
+          <div class="flex flex-col gap-1 bg-white border border-steel-blue-200 rounded-lg p-4 shadow-sm">
+            <span class="text-sm font-semibold text-jet-black-800">Certificate in Computer Hindi Typing</span>
+            <span class="text-xs text-steel-blue-600 font-medium">1 / 2 / 3 / 6 Months</span>
+          </div>
+          <div class="flex flex-col gap-1 bg-white border border-steel-blue-200 rounded-lg p-4 shadow-sm">
+            <span class="text-sm font-semibold text-jet-black-800">Certificate in Computer English &amp; Hindi Typing</span>
+            <span class="text-xs text-steel-blue-600 font-medium">1 / 2 / 3 / 6 Months</span>
+          </div>
+          <div class="flex flex-col gap-1 bg-white border border-steel-blue-200 rounded-lg p-4 shadow-sm">
+            <span class="text-sm font-semibold text-jet-black-800">Certificate in Internet Application</span>
+            <span class="text-xs text-steel-blue-600 font-medium">1 Week / 1 Month</span>
+          </div>
+          <div class="flex flex-col gap-1 bg-white border border-steel-blue-200 rounded-lg p-4 shadow-sm">
+            <span class="text-sm font-semibold text-jet-black-800">Certificate in Basic Computer</span>
+            <span class="text-xs text-steel-blue-600 font-medium">1 / 2 / 3 / 6 Months</span>
+          </div>
+          <div class="flex flex-col gap-1 bg-white border border-steel-blue-200 rounded-lg p-4 shadow-sm">
+            <span class="text-sm font-semibold text-jet-black-800">Certificate in DTP</span>
+            <span class="text-xs text-steel-blue-600 font-medium">1 / 2 / 3 / 6 Months</span>
+          </div>
+          <div class="flex flex-col gap-1 bg-white border border-steel-blue-200 rounded-lg p-4 shadow-sm">
+            <span class="text-sm font-semibold text-jet-black-800">Certificate in Tally</span>
+            <span class="text-xs text-steel-blue-600 font-medium">1 / 2 / 3 / 6 Months</span>
+          </div>
+          <div class="flex flex-col gap-1 bg-white border border-steel-blue-200 rounded-lg p-4 shadow-sm">
+            <span class="text-sm font-semibold text-jet-black-800">Certificate in Basic Programming</span>
+            <span class="text-xs text-steel-blue-600 font-medium">1 / 2 / 3 / 6 Months</span>
+          </div>
+        </div>
+      </div>
+    </section>
     </div>
-</article>{% endblock %}
+
+    <!-- HARDWARE COURSES -->
+    <div id="hardware-section" class="scroll-mt-20">
+<section class="py-12 lg:py-16" aria-labelledby="hw-diplomas-title">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 id="hw-diplomas-title" class="text-2xl sm:text-3xl font-bold text-jet-black-900 mb-2">Diploma Programs</h2>
+        <p class="text-jet-black-700 mb-10">Comprehensive one-year and six-month diploma programs with eligibility starting from Class 10.</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+
+          <!-- DCSHS -->
+          <article class="bg-white rounded-xl border border-steel-blue-200 shadow-sm overflow-hidden" itemscope itemtype="https://schema.org/Course">
+            <div class="bg-gradient-to-r from-steel-blue-600 to-deep-space-blue-700 px-6 py-4 flex items-center justify-between">
+              <h3 class="text-lg font-bold text-white" itemprop="name">Diploma in Computer Software &amp; Hardware Skills (DCSHS)</h3>
+              <span class="px-3 py-1 text-xs font-semibold rounded-full bg-sandy-brown-500 text-white">1 Year</span>
+            </div>
+            <div class="p-6">
+              <div class="flex flex-wrap gap-2 mb-4">
+                <span class="px-2.5 py-1 text-xs font-medium bg-steel-blue-100 text-steel-blue-800 rounded-full">Eligibility: 10th</span>
+                <span class="px-2.5 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full">Software + Hardware</span>
+              </div>
+              <ul class="space-y-2.5 text-sm text-jet-black-700" itemprop="description">
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Basics of computer software &amp; hardware, Windows/DOS, MS Office, MS Access, C &amp; C++</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Electronics concepts, computer hardware, peripherals, PC assembling, multimedia</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Installation of all types of software, networking concepts, troubleshooting</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Computer software &amp; hardware lab practical</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Project and Viva</span></li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- ADCH -->
+          <article class="bg-white rounded-xl border border-steel-blue-200 shadow-sm overflow-hidden" itemscope itemtype="https://schema.org/Course">
+            <div class="bg-gradient-to-r from-steel-blue-600 to-deep-space-blue-700 px-6 py-4 flex items-center justify-between">
+              <h3 class="text-lg font-bold text-white" itemprop="name">Advance Diploma in Computer Hardware (ADCH)</h3>
+              <span class="px-3 py-1 text-xs font-semibold rounded-full bg-sandy-brown-500 text-white">1 Year</span>
+            </div>
+            <div class="p-6">
+              <div class="flex flex-wrap gap-2 mb-4">
+                <span class="px-2.5 py-1 text-xs font-medium bg-steel-blue-100 text-steel-blue-800 rounded-full">Eligibility: 10th</span>
+                <span class="px-2.5 py-1 text-xs font-medium bg-sandy-brown-100 text-sandy-brown-800 rounded-full">Advanced</span>
+              </div>
+              <ul class="space-y-2.5 text-sm text-jet-black-700" itemprop="description">
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Basics of analog &amp; digital electronics</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Assembling, disassembling and upgrading of PC</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Troubleshooting of OS, virus &amp; anti-virus utilities</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Computer peripherals, OS/software browser &amp; modem driver installation, basics of networking</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Computer hardware lab practical</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Project and Viva</span></li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- DCH -->
+          <article class="bg-white rounded-xl border border-steel-blue-200 shadow-sm overflow-hidden" itemscope itemtype="https://schema.org/Course">
+            <div class="bg-gradient-to-r from-steel-blue-600 to-deep-space-blue-700 px-6 py-4 flex items-center justify-between">
+              <h3 class="text-lg font-bold text-white" itemprop="name">Diploma in Computer Hardware (DCH)</h3>
+              <span class="px-3 py-1 text-xs font-semibold rounded-full bg-sandy-brown-500 text-white">6 Months</span>
+            </div>
+            <div class="p-6">
+              <div class="flex flex-wrap gap-2 mb-4">
+                <span class="px-2.5 py-1 text-xs font-medium bg-steel-blue-100 text-steel-blue-800 rounded-full">Eligibility: 10th</span>
+                <span class="px-2.5 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full">Beginner</span>
+              </div>
+              <ul class="space-y-2.5 text-sm text-jet-black-700" itemprop="description">
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Basic electronics (analog &amp; digital), fundamentals of hardware, OS, motherboard, monitor, printer, SMPS, keyboard &amp; mouse</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Assembling of PC &amp; installation of OS &amp; software</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Computer hardware lab practical</span></li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- DCN -->
+          <article class="bg-white rounded-xl border border-steel-blue-200 shadow-sm overflow-hidden" itemscope itemtype="https://schema.org/Course">
+            <div class="bg-gradient-to-r from-steel-blue-600 to-deep-space-blue-700 px-6 py-4 flex items-center justify-between">
+              <h3 class="text-lg font-bold text-white" itemprop="name">Diploma in Computer Networking (DCN)</h3>
+              <span class="px-3 py-1 text-xs font-semibold rounded-full bg-sandy-brown-500 text-white">6 Months</span>
+            </div>
+            <div class="p-6">
+              <div class="flex flex-wrap gap-2 mb-4">
+                <span class="px-2.5 py-1 text-xs font-medium bg-steel-blue-100 text-steel-blue-800 rounded-full">Eligibility: 10th</span>
+                <span class="px-2.5 py-1 text-xs font-medium bg-deep-space-blue-100 text-deep-space-blue-800 rounded-full">Networking</span>
+              </div>
+              <ul class="space-y-2.5 text-sm text-jet-black-700" itemprop="description">
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Basic concepts of networking, OS, installation, networking devices (HUB, switch, LAN card, cables &amp; connectors)</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Peer-to-peer &amp; server-based networking with all types of operating systems</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-steel-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Computer networking lab practical</span></li>
+              </ul>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section><section class="py-12 lg:py-16 bg-almond-cream-50" aria-labelledby="hw-certificates-title">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 id="hw-certificates-title" class="text-2xl sm:text-3xl font-bold text-jet-black-900 mb-2">Certificate Programs</h2>
+        <p class="text-jet-black-700 mb-10">Focused six-month certificate courses specializing in hardware and peripherals.</p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+
+          <!-- CCHP -->
+          <article class="bg-white rounded-xl border border-steel-blue-200 shadow-sm overflow-hidden" itemscope itemtype="https://schema.org/Course">
+            <div class="bg-gradient-to-r from-almond-cream-500 to-sandy-brown-600 px-6 py-4 flex items-center justify-between">
+              <h3 class="text-lg font-bold text-white" itemprop="name">Certificate in Computer Hardware &amp; Peripherals (CCHP)</h3>
+              <span class="px-3 py-1 text-xs font-semibold rounded-full bg-white/20 text-white">6 Months</span>
+            </div>
+            <div class="p-6">
+              <div class="flex flex-wrap gap-2 mb-4">
+                <span class="px-2.5 py-1 text-xs font-medium bg-steel-blue-100 text-steel-blue-800 rounded-full">Eligibility: 10th</span>
+              </div>
+              <ul class="space-y-2.5 text-sm text-jet-black-700" itemprop="description">
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Study of computer systems , address bus, data bus, Intel &amp; Pentium processors</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Memory concepts , conventional/extended memory and cache memory</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Installation of OS &amp; software, motherboard, CD-ROM drive, monitor, modem, printer</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Computer hardware lab practical</span></li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- CPCAM -->
+          <article class="bg-white rounded-xl border border-steel-blue-200 shadow-sm overflow-hidden" itemscope itemtype="https://schema.org/Course">
+            <div class="bg-gradient-to-r from-almond-cream-500 to-sandy-brown-600 px-6 py-4 flex items-center justify-between">
+              <h3 class="text-lg font-bold text-white" itemprop="name">Certificate in PC Assembling &amp; Maintenance (CPCAM)</h3>
+              <span class="px-3 py-1 text-xs font-semibold rounded-full bg-white/20 text-white">6 Months</span>
+            </div>
+            <div class="p-6">
+              <div class="flex flex-wrap gap-2 mb-4">
+                <span class="px-2.5 py-1 text-xs font-medium bg-steel-blue-100 text-steel-blue-800 rounded-full">Eligibility: 10th</span>
+              </div>
+              <ul class="space-y-2.5 text-sm text-jet-black-700" itemprop="description">
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Computer-based management information, hardware models, mathematical concepts &amp; digital electronics</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>System software hardware troubleshooting &amp; communication technology</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Assembling &amp; disassembling of PC, OS &amp; software installation, PC maintenance</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Computer hardware lab practical</span></li>
+              </ul>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section><section class="py-12 lg:py-16" aria-labelledby="hw-short-term-title">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 id="hw-short-term-title" class="text-2xl sm:text-3xl font-bold text-jet-black-900 mb-2">Hardware Short-Term Certificates</h2>
+        <p class="text-jet-black-700 mb-10">Quick skill-building certificates with no eligibility requirement. Available in 1, 2, 3, or 6 month durations.</p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div class="flex items-center gap-3 bg-white border border-steel-blue-200 rounded-lg p-4 shadow-sm">
+            <svg class="h-8 w-8 text-steel-blue-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" /></svg>
+            <span class="text-sm font-medium text-jet-black-800">Certificate in CPU Repairing</span>
+          </div>
+          <div class="flex items-center gap-3 bg-white border border-steel-blue-200 rounded-lg p-4 shadow-sm">
+            <svg class="h-8 w-8 text-steel-blue-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" /></svg>
+            <span class="text-sm font-medium text-jet-black-800">Certificate in Printer Repairing</span>
+          </div>
+          <div class="flex items-center gap-3 bg-white border border-steel-blue-200 rounded-lg p-4 shadow-sm">
+            <svg class="h-8 w-8 text-steel-blue-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+            <span class="text-sm font-medium text-jet-black-800">Certificate in Software Installation</span>
+          </div>
+          <div class="flex items-center gap-3 bg-white border border-steel-blue-200 rounded-lg p-4 shadow-sm">
+            <svg class="h-8 w-8 text-steel-blue-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+            <span class="text-sm font-medium text-jet-black-800">Certificate in PC Assembling</span>
+          </div>
+          <div class="flex items-center gap-3 bg-white border border-steel-blue-200 rounded-lg p-4 shadow-sm">
+            <svg class="h-8 w-8 text-steel-blue-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+            <span class="text-sm font-medium text-jet-black-800">Certificate in Multimedia</span>
+          </div>
+        </div>
+        <p class="mt-4 text-sm text-jet-black-600"><strong>Duration:</strong> 1 / 2 / 3 / 6 months Â· <strong>Eligibility:</strong> None required</p>
+      </div>
+    </section>
+    </div>
+
+    <!-- Six-Month Diplomas & Certificates -->
+    <section class="py-12 lg:py-16 bg-almond-cream-50" aria-labelledby="short-diplomas-title">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 id="short-diplomas-title" class="text-2xl sm:text-3xl font-bold text-jet-black-900 mb-2">Six-Month Diplomas &amp; Certificates</h2>
+        <p class="text-jet-black-700 mb-10">Shorter programs focused on specific skills , accounting, publishing, web design and core applications.</p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+          <!-- ACCA -->
+          <article class="bg-white rounded-xl border border-steel-blue-200 shadow-sm overflow-hidden" itemscope itemtype="https://schema.org/Course">
+            <div class="bg-gradient-to-r from-almond-cream-500 to-sandy-brown-600 px-5 py-3.5 flex items-center justify-between">
+              <h3 class="text-base font-bold text-white" itemprop="name">Advance Certificate in Computer Application (ACCA)</h3>
+              <span class="px-3 py-1 text-xs font-semibold rounded-full bg-white/20 text-white">1 Year</span>
+            </div>
+            <div class="p-5">
+              <ul class="space-y-2 text-sm text-jet-black-700" itemprop="description">
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Fundamentals of Computer, Windows (OS)</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>MS-Office, MS Access</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>HTML, C Language or Tally, Internet</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Computer Lab Practical &amp; Project/Viva</span></li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- DCFA -->
+          <article class="bg-white rounded-xl border border-steel-blue-200 shadow-sm overflow-hidden" itemscope itemtype="https://schema.org/Course">
+            <div class="bg-gradient-to-r from-almond-cream-500 to-sandy-brown-600 px-5 py-3.5 flex items-center justify-between">
+              <h3 class="text-base font-bold text-white" itemprop="name">Diploma in Computer Financial Accounting (DCFA)</h3>
+              <span class="px-3 py-1 text-xs font-semibold rounded-full bg-white/20 text-white">6 Months</span>
+            </div>
+            <div class="p-5">
+              <div class="flex flex-wrap gap-2 mb-3">
+                <span class="px-2.5 py-1 text-xs font-medium bg-steel-blue-100 text-steel-blue-800 rounded-full">Eligibility: Min 10th</span>
+              </div>
+              <ul class="space-y-2 text-sm text-jet-black-700" itemprop="description">
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Fundamentals of Computer, Windows, MS-Office</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>MS Access, Financial Accounting , Tally</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Computer Lab Practical, Project/Viva</span></li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- DDTP -->
+          <article class="bg-white rounded-xl border border-steel-blue-200 shadow-sm overflow-hidden" itemscope itemtype="https://schema.org/Course">
+            <div class="bg-gradient-to-r from-almond-cream-500 to-sandy-brown-600 px-5 py-3.5 flex items-center justify-between">
+              <h3 class="text-base font-bold text-white" itemprop="name">Diploma in DeskTop Publishing (DDTP)</h3>
+              <span class="px-3 py-1 text-xs font-semibold rounded-full bg-white/20 text-white">6 Months</span>
+            </div>
+            <div class="p-5">
+              <div class="flex flex-wrap gap-2 mb-3">
+                <span class="px-2.5 py-1 text-xs font-medium bg-steel-blue-100 text-steel-blue-800 rounded-full">Eligibility: 10th</span>
+              </div>
+              <ul class="space-y-2 text-sm text-jet-black-700" itemprop="description">
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Fundamentals of Computer, Windows (OS)</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>PageMaker, CorelDraw, Photoshop, Scanning, Printing</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Computer Lab Practical, Project/Viva</span></li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- DWD -->
+          <article class="bg-white rounded-xl border border-steel-blue-200 shadow-sm overflow-hidden" itemscope itemtype="https://schema.org/Course">
+            <div class="bg-gradient-to-r from-almond-cream-500 to-sandy-brown-600 px-5 py-3.5 flex items-center justify-between">
+              <h3 class="text-base font-bold text-white" itemprop="name">Diploma in Web Designing (DWD)</h3>
+              <span class="px-3 py-1 text-xs font-semibold rounded-full bg-white/20 text-white">6 Months</span>
+            </div>
+            <div class="p-5">
+              <div class="flex flex-wrap gap-2 mb-3">
+                <span class="px-2.5 py-1 text-xs font-medium bg-steel-blue-100 text-steel-blue-800 rounded-full">Eligibility: 10th</span>
+              </div>
+              <ul class="space-y-2 text-sm text-jet-black-700" itemprop="description">
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Fundamentals of Computer, Windows, basics of DTP</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>HTML, DHTML, JavaScript or Flash &amp; Internet</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Computer Lab Practical, Project/Viva</span></li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- DCA -->
+          <article class="bg-white rounded-xl border border-steel-blue-200 shadow-sm overflow-hidden" itemscope itemtype="https://schema.org/Course">
+            <div class="bg-gradient-to-r from-almond-cream-500 to-sandy-brown-600 px-5 py-3.5 flex items-center justify-between">
+              <h3 class="text-base font-bold text-white" itemprop="name">Diploma in Computer Application (DCA)</h3>
+              <span class="px-3 py-1 text-xs font-semibold rounded-full bg-white/20 text-white">6 Months</span>
+            </div>
+            <div class="p-5">
+              <div class="flex flex-wrap gap-2 mb-3">
+                <span class="px-2.5 py-1 text-xs font-medium bg-steel-blue-100 text-steel-blue-800 rounded-full">Eligibility: Min 10th</span>
+              </div>
+              <ul class="space-y-2 text-sm text-jet-black-700" itemprop="description">
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Fundamentals of Computer, Windows (OS)</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>MS-Office, MS Access, Tally or C Language or Internet</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Computer Lab Practical, Project/Viva</span></li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- CCA -->
+          <article class="bg-white rounded-xl border border-steel-blue-200 shadow-sm overflow-hidden" itemscope itemtype="https://schema.org/Course">
+            <div class="bg-gradient-to-r from-almond-cream-500 to-sandy-brown-600 px-5 py-3.5 flex items-center justify-between">
+              <h3 class="text-base font-bold text-white" itemprop="name">Certificate in Computer Application (CCA)</h3>
+              <span class="px-3 py-1 text-xs font-semibold rounded-full bg-white/20 text-white">6 Months</span>
+            </div>
+            <div class="p-5">
+              <ul class="space-y-2 text-sm text-jet-black-700" itemprop="description">
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Fundamentals of Computer, Windows, MS-Office, MS Access</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>C Language or Tally or Internet</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Computer Lab Practical &amp; Project/Viva</span></li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- CBC -->
+          <article class="bg-white rounded-xl border border-steel-blue-200 shadow-sm overflow-hidden" itemscope itemtype="https://schema.org/Course">
+            <div class="bg-gradient-to-r from-almond-cream-500 to-sandy-brown-600 px-5 py-3.5 flex items-center justify-between">
+              <h3 class="text-base font-bold text-white" itemprop="name">Certificate in Basic Computer (CBC)</h3>
+              <span class="px-3 py-1 text-xs font-semibold rounded-full bg-white/20 text-white">3 Months</span>
+            </div>
+            <div class="p-5">
+              <ul class="space-y-2 text-sm text-jet-black-700" itemprop="description">
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Fundamentals of Computer, Windows (OS)</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>MS-Office (Word, Excel, PowerPoint)</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Computer Lab Practical &amp; Project/Viva</span></li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- CCFA -->
+          <article class="bg-white rounded-xl border border-steel-blue-200 shadow-sm overflow-hidden" itemscope itemtype="https://schema.org/Course">
+            <div class="bg-gradient-to-r from-almond-cream-500 to-sandy-brown-600 px-5 py-3.5 flex items-center justify-between">
+              <h3 class="text-base font-bold text-white" itemprop="name">Certificate in Computer Financial Accounting (CCFA)</h3>
+              <span class="px-3 py-1 text-xs font-semibold rounded-full bg-white/20 text-white">3 Months</span>
+            </div>
+            <div class="p-5">
+              <ul class="space-y-2 text-sm text-jet-black-700" itemprop="description">
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Fundamentals of Computer, Windows (OS)</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Basics of Financial Accounting , Tally</span></li>
+                <li class="flex items-start gap-2"><svg class="h-5 w-5 text-sandy-brown-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg><span>Computer Lab Practical &amp; Project/Viva</span></li>
+              </ul>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Short-Term Certificates -->
+    <section class="py-12 lg:py-16" aria-labelledby="short-term-title">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 id="short-term-title" class="text-2xl sm:text-3xl font-bold text-jet-black-900 mb-2">Short-Term Certificates</h2>
+        <p class="text-jet-black-700 mb-10">Quick, skill-focused certificates in typing, internet, DTP, Tally and programming.</p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="flex flex-col gap-1 bg-white border border-steel-blue-200 rounded-lg p-4 shadow-sm">
+            <span class="text-sm font-semibold text-jet-black-800">Certificate in Computer English Typing</span>
+            <span class="text-xs text-steel-blue-600 font-medium">1 / 2 / 3 / 6 Months</span>
+          </div>
+          <div class="flex flex-col gap-1 bg-white border border-steel-blue-200 rounded-lg p-4 shadow-sm">
+            <span class="text-sm font-semibold text-jet-black-800">Certificate in Computer Hindi Typing</span>
+            <span class="text-xs text-steel-blue-600 font-medium">1 / 2 / 3 / 6 Months</span>
+          </div>
+          <div class="flex flex-col gap-1 bg-white border border-steel-blue-200 rounded-lg p-4 shadow-sm">
+            <span class="text-sm font-semibold text-jet-black-800">Certificate in Computer English &amp; Hindi Typing</span>
+            <span class="text-xs text-steel-blue-600 font-medium">1 / 2 / 3 / 6 Months</span>
+          </div>
+          <div class="flex flex-col gap-1 bg-white border border-steel-blue-200 rounded-lg p-4 shadow-sm">
+            <span class="text-sm font-semibold text-jet-black-800">Certificate in Internet Application</span>
+            <span class="text-xs text-steel-blue-600 font-medium">1 Week / 1 Month</span>
+          </div>
+          <div class="flex flex-col gap-1 bg-white border border-steel-blue-200 rounded-lg p-4 shadow-sm">
+            <span class="text-sm font-semibold text-jet-black-800">Certificate in Basic Computer</span>
+            <span class="text-xs text-steel-blue-600 font-medium">1 / 2 / 3 / 6 Months</span>
+          </div>
+          <div class="flex flex-col gap-1 bg-white border border-steel-blue-200 rounded-lg p-4 shadow-sm">
+            <span class="text-sm font-semibold text-jet-black-800">Certificate in DTP</span>
+            <span class="text-xs text-steel-blue-600 font-medium">1 / 2 / 3 / 6 Months</span>
+          </div>
+          <div class="flex flex-col gap-1 bg-white border border-steel-blue-200 rounded-lg p-4 shadow-sm">
+            <span class="text-sm font-semibold text-jet-black-800">Certificate in Tally</span>
+            <span class="text-xs text-steel-blue-600 font-medium">1 / 2 / 3 / 6 Months</span>
+          </div>
+          <div class="flex flex-col gap-1 bg-white border border-steel-blue-200 rounded-lg p-4 shadow-sm">
+            <span class="text-sm font-semibold text-jet-black-800">Certificate in Basic Programming</span>
+            <span class="text-xs text-steel-blue-600 font-medium">1 / 2 / 3 / 6 Months</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-12 lg:py-16 bg-gradient-to-r from-steel-blue-700 via-steel-blue-800 to-deep-space-blue-800" aria-labelledby="cta-title">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 id="cta-title" class="text-3xl sm:text-4xl font-bold text-white mb-4">Start Your IT Career Today</h2>
+        <p class="text-lg text-steel-blue-100 mb-8 max-w-2xl mx-auto">Visit our centre at Dhanubhanga, Goalpara, Assam or call us to enroll in any of these courses.</p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a href="tel:7002616276" class="inline-flex items-center justify-center px-8 py-4 text-base font-semibold rounded-lg text-white bg-sandy-brown-500 hover:bg-sandy-brown-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sandy-brown-500 transition-all shadow-lg" aria-label="Call the institute at 7002616276">
+            <svg class="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+            Call 7002616276
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+{% endblock %}

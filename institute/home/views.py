@@ -20,21 +20,21 @@ institute_ctxt = {
         "site_name": "Compuetech",
         "site_tagline": "Empowering digital future.",
         "institute": {
-            "email": "compuetech@tuta.io",
+            "email": "kakilnath@gmail.com",
             "phone": "+91 700-261-6276",
             "address": "Dhanubhanga, Goalpara, Assam, India",
             "postal_address": "P.O. Dhanubhanga, Dist:Goalpara, PIN: 783130, India",
         },
         "institute_contact": {
-            "email": "info@abccomputerinstitute.com",
+            "email": "kakilnath@gmail.com",
             "phone": "+91 700-261-6276",
             "whatsapp": "+91 700-261-6276",
         },
         "social_links": {
         },
         "seo": {
-            "default_description": "ABC Computer Training Institute provides practical computer training and career-focused digital skills courses.",
-            "default_keywords": "computer training, computer courses, IT training, digital skills, career courses",
+            "default_description": "Compuetech is a Computer training courses that teaches job ready skills in Software, Hardware and Networking located at Dhanubhanga, Goalpara, Assam, India. We focus on providing quality and affordable computer education. Empowring digital future",
+            "default_keywords": "computer training, computer training near me, computer based training, computer technician training, affordable computer institute, ADCA course near me, computer institute near me, computer classes near me, computer training institute near me,",
             
         },
         "about_content":about_text
@@ -43,6 +43,9 @@ institute_ctxt = {
 
 def home(request):
     return render(request, "home.html", context=institute_ctxt)
+
+def courses(request):
+    return render(request,"courses/detail.html",context=institute_ctxt)
 
 
 def course_list(request):
@@ -65,9 +68,6 @@ def course_list(request):
     context = {**institute_ctxt, "courses": courses}
     return render(request, "courses/list.html", context=context)
 
-
-def course_detail(request, slug):
-    return render(request, "courses/detail.html", {"slug": slug})
 
 
 def notice_board(request):
