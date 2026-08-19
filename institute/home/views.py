@@ -1,7 +1,10 @@
 import csv
 from pathlib import Path
 
+from django.utils.timezone import localdate
 from django.shortcuts import render
+
+from .models import Notice
 
 
 about_text = '''
@@ -68,7 +71,24 @@ def course_detail(request, slug):
 
 
 def notice_board(request):
-    return render(request, "notices/board.html", context=institute_ctxt)
+    notices = Notice.objects.all()[:10]
+    notice_context = [
+        {
+            "title": notice.title,
+            "date": notice.published_at,
+            "content": notice.message,
+            "excerpt": notice.message,
+            "slug": str(notice.number),
+            "is_recent": notice.published_at.date() == localdate(),
+        }
+        for notice in notices
+    ]
+    context = {
+        **institute_ctxt,
+        "notices": notice_context,
+        "next_page": 2,
+    }
+    return render(request, "notices/board.html", context=context)
 
 
 def notice_detail(request, slug):

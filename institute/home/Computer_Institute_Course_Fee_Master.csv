@@ -1,27 +1,31 @@
 Course Code,Course Name,Duration,Eligibility,Admission Fees,Monthly Fees,Exam Fees,Total Fees
-PG-DCA,PG-Diploma in Computer Application,1 Year,Graduate,"1,500",600,750,"9,400"
-DCITA,Diploma in Computer Instructor Training Application,1 Year,12th,"1,900",600,500,"9,600"
-HDCA,Honour Diploma in Computer Application,1 Year,12th,"1,200",500,450,"7,650"
-ADCP,Advance Diploma in Computer Programming,1 Year,12th,"1,200",500,450,"7,650"
-DCOMP,Diploma in Computer Office Management & Publishing,1 Year,12th,"1,200",500,450,"7,650"
-ADCS/ADCA,Advance Diploma in Computer Application,1 Year,10th,"1,200",500,450,"7,650"
-DCOSA/ADCFA,Diploma in Computer Office Skills & Accounting,1 Year,10th,"1,200",500,450,"7,650"
-ACAIS,Advance Certificate in Artificial Intelligence (AI) Application,1 Year,10th,,,,
-ACCA,Advance Certificate in Computer Application,1 Year,NA,"1,000",450,350,"6,750"
-DCFA,Diploma in Computer Financial Accounting,6 Months,10th,800,450,250,"3,750"
-DDTP,Diploma in Desktop Publishing,6 Months,10th,800,500,250,"4,050"
-DWD,Diploma in Web Designing,6 Months,10th,800,500,250,"4,050"
-DCS/DCA,Diploma in Computer Skills,6 Months,10th,800,500,250,"4,050"
-CAIS,Certificate in Artificial Intelligence (AI) Skill,6 Months,NA,,,,
-CCS,Certificate in Computer Skills,6 Months,NA,,,,
-CBC,Certificate in Basic Computer,3 Months,NA,500,350,250,"1,800"
-CCFA,Certificate in Computer Financial Accounting,3 Months,NA,500,350,250,"1,800"
-CAIS,Certificate in Artificial Intelligence (AI) Skill,3 Months,NA,,,,
-CCHP,Certificate Computer Hardware & Peripherals,6 Months,10th,"1,000",500,250,"4,250"
-CPCAM,Certificate in PC Assembling & Maintenance,6 Months,10th,"1,000",500,250,"4,250"
-DCH,Diploma in Computer Hardware,6 Months,10th,"1,500",650,450,"9,750"
-DCN,Diploma in Computer Networking,6 Months,10th,"1,000",500,250,"4,250"
-ADCH,Advance Diploma in Computer Hardware,1 Year,10th,"1,500",650,450,"9,750"
-DCSHS,Diploma in Computer Software & Hardware Skills,1 Year,10th,"1,500",650,450,"9,750"
-,Other Short Term Courses � Software,1/2/3/6 Months,NA,,,,
-,Other Short Term Courses � Hardware,1/2/3/6 Months,NA,,,,
+PG-DCA,PG-Diploma in Computer Application,1 Year,Graduate,1500,600,750,9400
+DCITA,Diploma in Computer Instructor Training Application,1 Year,12th,1900,600,500,9600
+HDCA,Honour Diploma in Computer Application,1 Year,12th,1200,500,450,7650
+ADCP,Advance Diploma in Computer Programming,1 Year,12th,1200,500,450,7650
+DCOMP,Diploma in Computer Office Management & Publishing,1 Year,12th,1200,500,450,7650
+ADCS/ADCA,Advance Diploma in Computer Application,1 Year,10th,1200,500,450,7650
+DCOSA/ADCFA,Diploma in Computer Office Skills & Accounting,1 Year,10th,1200,500,450,7650
+ACAIS,Advance Certificate in Artificial Intelligence (AI) Application,1 Year,10th,1200,500,450,7650
+ACCA,Advance Certificate in Computer Application,1 Year,NA,1000,450,350,6750
+DCFA,Diploma in Computer Financial Accounting,6 Months,10th,800,450,250,3750
+DDTP,Diploma in Desktop Publishing,6 Months,10th,800,500,250,4050
+DWD,Diploma in Web Designing,6 Months,10th,800,500,250,4050
+DCS/DCA,Diploma in Computer Skills,6 Months,10th,800,500,250,4050
+CAIS,Certificate in Artificial Intelligence (AI) Skill,6 Months,10th,800,500,250,4050
+CCS,Certificate in Computer Skills,6 Months,10th,800,500,250,4050
+CBC,Certificate in Basic Computer,3 Months,10th,500,350,250,1800
+CCFA,Certificate in Computer Financial Accounting,3 Months,10th,500,350,250,1800
+CAIS,Certificate in Artificial Intelligence (AI) Skill,3 Months,10th,500,350,250,1800
+CCHP,Certificate Computer Hardware & Peripherals,6 Months,10th,1000,500,250,4250
+CPCAM,Certificate in PC Assembling & Maintenance,6 Months,10th,1000,500,250,4250
+DCH,Diploma in Computer Hardware,6 Months,10th,1500,650,450,9750
+DCN,Diploma in Computer Networking,6 Months,10th,1000,500,250,4250
+ADCH,Advance Diploma in Computer Hardware,1 Year,10th,1500,650,450,9750
+DCSHS,Diploma in Computer Software & Hardware Skills,1 Year,10th,1500,650,450,9750
+CCET,Certificate in Computer English Typing          ,1 Months,8th ,1000,500,450,1950
+CCHT,Certificate in Computer Hindi Typing,1 Months,8th ,1000,500,450,1950
+CIA,Certificate in Internet Application                          ,1 Months,8th ,1000,500,450,1950
+CBC,Certificate in Basic Computer,1 Months,8th ,1000,500,450,1950
+CA,Certificate in Accounting,1 Months,8th ,1200,500,450,2150
+CBP,Certificate in Basic Programming,1 Months,8th ,1000,500,450,1950
