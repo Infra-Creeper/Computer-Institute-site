@@ -113,7 +113,8 @@ def admission_form(request):
 
 
 def admission_success(request):
-    return render(request, "admission/success.html")
+    application = request.session.pop("admission_success", {})
+    return render(request, "admission/success.html", {"application": application})
 
 
 def about(request):

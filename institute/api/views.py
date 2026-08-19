@@ -3,7 +3,9 @@ from datetime import date
 from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator
 from django.http import HttpResponse
+from django.shortcuts import redirect
 from django.template.loader import render_to_string
+from django.urls import reverse
 from django.views.decorators.http import require_GET, require_POST
 
 from home.models import Admission, Contact, Notice
@@ -104,7 +106,13 @@ def submit_admission(request):
 		return _response("Please check the application fields and try again.")
 
 	application.save()
-	return _response(
-		f"Application received. Your reference is <strong>{application.ref_id}</strong>.",
-		success=True,
-	)
+	request.session["admission_success"] = {
+		"full_name": application.name,
+		"reference_number": application.ref_id,
+	}
+	success_url = reverse("home:admission-success")
+	if request.headers.get("HX-Request") == "true":
+		response = HttpResponse(status=200)
+		response["HX-Redirect"] = success_url
+		return response
+	return redirect(success_url)
