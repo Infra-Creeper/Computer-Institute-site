@@ -1,37 +1,37 @@
 <div x-data="{ selectedTab: 'Software' }" class="w-full py-1.5">
     <div x-on:keydown.right.prevent="$focus.wrap().next()" x-on:keydown.left.prevent="$focus.wrap().previous()"
-        class="flex gap-2 overflow-x-auto border-b border-gray-300" role="tablist" aria-label="tab options">
+        class="flex gap-1 overflow-x-auto border-b border-gray-300" role="tablist" aria-label="tab options">
         <button x-on:click="selectedTab = 'Software'" x-bind:aria-selected="selectedTab === 'Software'"
             x-bind:tabindex="selectedTab === 'Software' ? '0' : '-1'"
             x-bind:class="selectedTab === 'Software' ? 'font-bold text-sandy-brown-500 border-b-2 border-sandy-brown-500' : 'text-black font-medium hover:border-b-2 hover:border-b-gray-300'"
-            class="h-min px-4 py-2 text-2xl font-bold" type="button" role="tab" aria-controls="tabpanelSoftware">Software</button>
+            class="h-min shrink-0 whitespace-nowrap px-3 py-2 text-base font-bold sm:px-4 sm:text-lg lg:text-2xl" type="button" role="tab" aria-controls="tabpanelSoftware">Software</button>
         <button x-on:click="selectedTab = 'Hardware'" x-bind:aria-selected="selectedTab === 'Hardware'"
             x-bind:tabindex="selectedTab === 'Hardware' ? '0' : '-1'"
             x-bind:class="selectedTab === 'Hardware' ? 'font-bold text-sandy-brown-500 border-b-2 border-sandy-brown-500' : 'text-black font-medium hover:border-b-2 hover:border-b-gray-300'"
-            class="h-min px-4 py-2 text-2xl font-bold" type="button" role="tab" aria-controls="tabpanelHardware">Hardware</button>
+            class="h-min shrink-0 whitespace-nowrap px-3 py-2 text-base font-bold sm:px-4 sm:text-lg lg:text-2xl" type="button" role="tab" aria-controls="tabpanelHardware">Hardware</button>
         <button x-on:click="selectedTab = 'Networking'" x-bind:aria-selected="selectedTab === 'Networking'"
             x-bind:tabindex="selectedTab === 'Networking' ? '0' : '-1'"
             x-bind:class="selectedTab === 'Networking' ? 'font-bold text-sandy-brown-500 border-b-2 border-sandy-brown-500' : 'text-black font-medium hover:border-b-2 hover:border-b-gray-300'"
-            class="h-min px-4 py-2 text-2xl font-bold" type="button" role="tab"
+            class="h-min shrink-0 whitespace-nowrap px-3 py-2 text-base font-bold sm:px-4 sm:text-lg lg:text-2xl" type="button" role="tab"
             aria-controls="tabpanelNetworking">Networking</button>
     </div>
-    <div class="px-2 py-4 text-black">
+    <div class="px-1 py-4 text-black sm:px-2">
         <div x-cloak x-show="selectedTab === 'Software'" id="tabpanelSoftware" role="tabpanel" aria-label="Software">
-            <ul  class="text-xl py-2.5 list-disc space-y-3">
+            <ul class="list-disc space-y-3 wrap-break-word py-2.5 text-base sm:text-lg lg:text-xl">
                 <li>PG- Diploma in Computer Application(PG-DCA)</li>
                 <li>Diploma in Computer Application (DCA)</li>
                 <li>Advance Diploma in Computer Application (ADCA) </li>
             </ul>
         </div>
         <div x-cloak x-show="selectedTab === 'Hardware'" id="tabpanelHardware" role="tabpanel" aria-label="Hardware">
-            <ul  class="text-xl py-2.5 list-disc space-y-3">
+            <ul class="list-disc space-y-3 wrap-break-word py-2.5 text-base sm:text-lg lg:text-xl">
                 <li>Diploma in Computer Software & Hardware Skills (DCSHS)</li>
                 <li>Advance Diploma in Computer Hardware (ADCH) </li>
                 <li>Diploma in Computer Hardware (DCH)  </li>
             </ul>
         </div>
         <div x-cloak x-show="selectedTab === 'Networking'" id="tabpanelNetworking" role="tabpanel">
-            <ul  class="text-xl py-2.5 list-disc space-y-3">
+            <ul class="list-disc space-y-3 wrap-break-word py-2.5 text-base sm:text-lg lg:text-xl">
                 <li>Diploma in Computer Networking (DCN) </li>
                 <li class="list-none text-steel-blue-100">&blank;</li>
                 <li class="list-none text-steel-blue-100">&blank;</li>
