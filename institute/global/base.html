@@ -31,8 +31,11 @@
 <body class="min-h-screen bg-steel-blue-50 text-jet-black-900" hx-boost="true">
   <header class="bg-deep-space-blue-700 text-white shadow-lg">
     <nav class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8 w-full"
-      aria-label="Main navigation"><img src="{% static 'images/logo.png' %}" alt="logo" class="h-14">
-      <div class="flex flex-col space-y-1">
+      aria-label="Main navigation">
+      <div class="items-end lg:-mr-15">
+        <img src="{% static 'images/logo.png' %}" alt="logo" class="h-14">
+      </div>
+      <div class="flex flex-col space-y-1 lg:-ml-15">
         <span><a href="/" class="text-3xl tracking-wide font-stretch-50%" style="font-family: 'AR DESTINE';">{{ site_name|default:'Compuetech' }}</a></span>
         <span class="text-xs ">Computer Training Institute</span>
       </div>
